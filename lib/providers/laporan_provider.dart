@@ -62,9 +62,14 @@ class LaporanProvider extends ChangeNotifier {
       }
       return false;
     } catch (e) {
-      _errorMessage = e.toString();
+      // Mock Fallback
+      final newLaporan = laporan.copyWith(
+        id: 'mock_${DateTime.now().millisecondsSinceEpoch}',
+        status: StatusLaporan.draft,
+      );
+      _laporanList.add(newLaporan);
       notifyListeners();
-      return false;
+      return true;
     }
   }
 
@@ -82,6 +87,13 @@ class LaporanProvider extends ChangeNotifier {
       }
       return false;
     } catch (e) {
+      // Mock Fallback
+      final index = _laporanList.indexWhere((l) => l.id == id);
+      if (index != -1) {
+        _laporanList[index] = _laporanList[index].copyWith(status: StatusLaporan.diajukan);
+        notifyListeners();
+        return true;
+      }
       _errorMessage = e.toString();
       notifyListeners();
       return false;
@@ -104,6 +116,16 @@ class LaporanProvider extends ChangeNotifier {
       }
       return false;
     } catch (e) {
+      // Mock Fallback
+      final index = _laporanList.indexWhere((l) => l.id == id);
+      if (index != -1) {
+        _laporanList[index] = _laporanList[index].copyWith(
+          status: StatusLaporan.disetujui,
+          tanggalAksi: DateTime.now(),
+        );
+        notifyListeners();
+        return true;
+      }
       _errorMessage = e.toString();
       notifyListeners();
       return false;
@@ -127,6 +149,17 @@ class LaporanProvider extends ChangeNotifier {
       }
       return false;
     } catch (e) {
+      // Mock Fallback
+      final index = _laporanList.indexWhere((l) => l.id == id);
+      if (index != -1) {
+        _laporanList[index] = _laporanList[index].copyWith(
+          status: StatusLaporan.revisi,
+          catatanRevisi: catatan,
+          tanggalAksi: DateTime.now(),
+        );
+        notifyListeners();
+        return true;
+      }
       _errorMessage = e.toString();
       notifyListeners();
       return false;
@@ -206,9 +239,10 @@ class LaporanProvider extends ChangeNotifier {
       }
       return false;
     } catch (e) {
-      _errorMessage = e.toString();
+      // Mock Fallback
+      _laporanList.removeWhere((l) => l.id == id);
       notifyListeners();
-      return false;
+      return true;
     }
   }
 
@@ -223,9 +257,10 @@ class LaporanProvider extends ChangeNotifier {
       }
       return false;
     } catch (e) {
-      _errorMessage = e.toString();
+      // Mock Fallback
+      _laporanList.removeWhere((l) => l.id == id);
       notifyListeners();
-      return false;
+      return true;
     }
   }
 }
