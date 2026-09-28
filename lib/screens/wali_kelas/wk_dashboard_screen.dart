@@ -5,6 +5,7 @@ import '../../core/theme/app_colors.dart';
 import '../../providers/auth_provider.dart';
 import '../../providers/barang_provider.dart';
 import '../../providers/dashboard_provider.dart';
+import '../../providers/theme_provider.dart';
 import '../../widgets/common/app_drawer.dart';
 import '../../widgets/common/stat_card.dart';
 import '../../widgets/barang/barang_card.dart';
@@ -67,6 +68,16 @@ class _WkDashboardScreenState extends State<WkDashboardScreen> {
           ],
         ),
         actions: [
+          Consumer<ThemeProvider>(
+            builder: (context, themeProvider, _) => IconButton(
+              tooltip: themeProvider.isDark ? 'Mode Terang' : 'Mode Gelap',
+              icon: Icon(
+                themeProvider.isDark ? Icons.wb_sunny_rounded : Icons.nightlight_round,
+                color: themeProvider.isDark ? Colors.amber : Colors.indigo,
+              ),
+              onPressed: themeProvider.toggleTheme,
+            ),
+          ),
           IconButton(
             icon: const Icon(Icons.print, color: AppColors.primary),
             tooltip: 'Cetak Laporan PDF',

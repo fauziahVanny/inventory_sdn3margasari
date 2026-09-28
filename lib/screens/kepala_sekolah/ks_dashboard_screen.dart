@@ -5,6 +5,7 @@ import '../../core/theme/app_colors.dart';
 import '../../providers/auth_provider.dart';
 import '../../providers/laporan_provider.dart';
 import '../../providers/dashboard_provider.dart';
+import '../../providers/theme_provider.dart';
 import '../../widgets/common/app_drawer.dart';
 import '../../widgets/common/stat_card.dart';
 import '../../widgets/laporan/laporan_card.dart';
@@ -53,7 +54,22 @@ class _KsDashboardScreenState extends State<KsDashboardScreen> {
     final menungguAcc = laporanProv.laporanMenungguAcc;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Dashboard Kepala Sekolah')),
+      appBar: AppBar(
+        title: const Text('Dashboard Kepala Sekolah'),
+        actions: [
+          Consumer<ThemeProvider>(
+            builder: (context, themeProvider, _) => IconButton(
+              tooltip: themeProvider.isDark ? 'Mode Terang' : 'Mode Gelap',
+              icon: Icon(
+                themeProvider.isDark ? Icons.wb_sunny_rounded : Icons.nightlight_round,
+                color: themeProvider.isDark ? Colors.amber : Colors.indigo,
+              ),
+              onPressed: themeProvider.toggleTheme,
+            ),
+          ),
+          const SizedBox(width: 4),
+        ],
+      ),
       drawer: const AppDrawer(),
       body: RefreshIndicator(
         onRefresh: _loadData,

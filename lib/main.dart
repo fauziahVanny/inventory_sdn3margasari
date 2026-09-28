@@ -6,6 +6,7 @@ import 'providers/auth_provider.dart';
 import 'providers/barang_provider.dart';
 import 'providers/laporan_provider.dart';
 import 'providers/dashboard_provider.dart';
+import 'providers/theme_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,6 +17,7 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
+        ChangeNotifierProvider(create: (_) => ThemeProvider()),
         ChangeNotifierProvider(create: (_) => AuthProvider()..checkLoginStatus()),
         ChangeNotifierProvider(create: (_) => BarangProvider()),
         ChangeNotifierProvider(create: (_) => LaporanProvider()),

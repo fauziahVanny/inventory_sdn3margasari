@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/constants/app_constants.dart';
 import '../../providers/auth_provider.dart';
+import '../../providers/theme_provider.dart';
 
 /// Sidebar/drawer navigasi berdasarkan role pengguna
 class AppDrawer extends StatelessWidget {
@@ -18,7 +19,7 @@ class AppDrawer extends StatelessWidget {
     final namaKelas = user.namaKelas;
 
     return Drawer(
-      backgroundColor: AppColors.surface,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       child: Column(
         children: [
           // Header
@@ -103,6 +104,45 @@ class AppDrawer extends StatelessWidget {
               children: _getMenuItems(context, user.role),
             ),
           ),
+          // Dark / Light mode toggle
+          const Divider(height: 1),
+          Consumer<ThemeProvider>(
+            builder: (context, themeProvider, _) {
+              final isDark = themeProvider.isDark;
+              return ListTile(
+                contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
+                leading: Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: isDark
+                        ? Colors.amber.withValues(alpha: 0.15)
+                        : Colors.indigo.withValues(alpha: 0.1),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Icon(
+                    isDark ? Icons.wb_sunny_rounded : Icons.nightlight_round,
+                    color: isDark ? Colors.amber : Colors.indigo,
+                    size: 20,
+                  ),
+                ),
+                title: Text(
+                  isDark ? 'Mode Terang' : 'Mode Gelap',
+                  style: TextStyle(
+                    color: isDark ? Colors.amber : Colors.indigo,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                trailing: Switch(
+                  value: isDark,
+                  onChanged: (_) => themeProvider.toggleTheme(),
+                  activeColor: Colors.amber,
+                  inactiveThumbColor: Colors.indigo,
+                  inactiveTrackColor: Colors.indigo.withValues(alpha: 0.2),
+                ),
+                onTap: () => themeProvider.toggleTheme(),
+              );
+            },
+          ),
           // Logout
           const Divider(height: 1),
           ListTile(
@@ -163,11 +203,15 @@ class AppDrawer extends StatelessWidget {
   Widget _menuItem(BuildContext context, IconData icon, String title, String route) {
     final currentLocation = GoRouterState.of(context).uri.toString();
     final isActive = currentLocation == route;
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 2),
       decoration: BoxDecoration(
-        color: isActive ? AppColors.primarySurface : Colors.transparent,
+        color: isActive
+            ? AppColors.primary.withValues(alpha: isDark ? 0.2 : 0.08)
+            : Colors.transparent,
         borderRadius: BorderRadius.circular(12),
       ),
       child: ListTile(
@@ -176,13 +220,13 @@ class AppDrawer extends StatelessWidget {
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
             color: isActive
-                ? AppColors.primary.withValues(alpha: 0.1)
-                : AppColors.background,
+                ? AppColors.primary.withValues(alpha: 0.15)
+                : theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
             borderRadius: BorderRadius.circular(10),
           ),
           child: Icon(
             icon,
-            color: isActive ? AppColors.primary : AppColors.textSecondary,
+            color: isActive ? AppColors.primary : theme.colorScheme.onSurfaceVariant,
             size: 20,
           ),
         ),
@@ -191,7 +235,7 @@ class AppDrawer extends StatelessWidget {
           style: TextStyle(
             fontSize: 14,
             fontWeight: isActive ? FontWeight.w600 : FontWeight.w500,
-            color: isActive ? AppColors.primary : AppColors.textPrimary,
+            color: isActive ? AppColors.primary : theme.colorScheme.onSurface,
           ),
         ),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),

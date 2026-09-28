@@ -6,6 +6,7 @@ import '../../core/services/api_service.dart';
 import '../../models/kelas_model.dart';
 import '../../providers/auth_provider.dart';
 import '../../providers/dashboard_provider.dart';
+import '../../providers/theme_provider.dart';
 import '../../widgets/common/app_drawer.dart';
 import '../../widgets/common/stat_card.dart';
 
@@ -66,7 +67,22 @@ class _OpsDashboardScreenState extends State<OpsDashboardScreen> {
     };
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Dashboard OPS')),
+      appBar: AppBar(
+        title: const Text('Dashboard OPS'),
+        actions: [
+          Consumer<ThemeProvider>(
+            builder: (context, themeProvider, _) => IconButton(
+              tooltip: themeProvider.isDark ? 'Mode Terang' : 'Mode Gelap',
+              icon: Icon(
+                themeProvider.isDark ? Icons.wb_sunny_rounded : Icons.nightlight_round,
+                color: themeProvider.isDark ? Colors.amber : Colors.indigo,
+              ),
+              onPressed: themeProvider.toggleTheme,
+            ),
+          ),
+          const SizedBox(width: 4),
+        ],
+      ),
       drawer: const AppDrawer(),
       body: RefreshIndicator(
         onRefresh: _loadData,
