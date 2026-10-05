@@ -59,7 +59,7 @@ class _OpsLaporanScreenState extends State<OpsLaporanScreen> with SingleTickerPr
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Laporan'),
+        title: Text('Laporan'),
         bottom: TabBar(
           controller: _tabController,
           labelColor: AppColors.primary,
@@ -87,8 +87,8 @@ class _OpsLaporanScreenState extends State<OpsLaporanScreen> with SingleTickerPr
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => _showCreateLaporanDialog(context),
-        icon: const Icon(Icons.add),
-        label: const Text('Buat Laporan'),
+        icon: Icon(Icons.add),
+        label: Text('Buat Laporan'),
       ),
     );
   }
@@ -100,7 +100,7 @@ class _OpsLaporanScreenState extends State<OpsLaporanScreen> with SingleTickerPr
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(Icons.description_outlined, size: 64, color: AppColors.textHint),
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
             Text('Belum ada laporan', style: Theme.of(context).textTheme.titleMedium),
           ],
         ),
@@ -127,13 +127,13 @@ class _OpsLaporanScreenState extends State<OpsLaporanScreen> with SingleTickerPr
         return StatefulBuilder(
           builder: (ctx, setDialogState) {
             return AlertDialog(
-              title: const Text('Buat Laporan Baru'),
+              title: Text('Buat Laporan Baru'),
               content: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text('Jenis Laporan', style: Theme.of(context).textTheme.titleSmall),
-                  const SizedBox(height: 8),
+                  SizedBox(height: 8),
                   DropdownButtonFormField<JenisLaporan>(
                     initialValue: selectedJenis,
                     items: JenisLaporan.values.map((j) {
@@ -147,9 +147,9 @@ class _OpsLaporanScreenState extends State<OpsLaporanScreen> with SingleTickerPr
                     },
                   ),
                   if (selectedJenis == JenisLaporan.perKelas) ...[
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16),
                     Text('Pilih Kelas', style: Theme.of(context).textTheme.titleSmall),
-                    const SizedBox(height: 8),
+                    SizedBox(height: 8),
                     DropdownButtonFormField<String>(
                       initialValue: selectedKelasId,
                       decoration: const InputDecoration(hintText: 'Pilih kelas'),
@@ -164,7 +164,7 @@ class _OpsLaporanScreenState extends State<OpsLaporanScreen> with SingleTickerPr
               actions: [
                 TextButton(
                   onPressed: () => Navigator.pop(ctx),
-                  child: const Text('Batal'),
+                  child: Text('Batal'),
                 ),
                 ElevatedButton(
                   onPressed: () async {
@@ -191,7 +191,7 @@ class _OpsLaporanScreenState extends State<OpsLaporanScreen> with SingleTickerPr
                       );
                     }
                   },
-                  child: const Text('Buat'),
+                  child: Text('Buat'),
                 ),
               ],
             );

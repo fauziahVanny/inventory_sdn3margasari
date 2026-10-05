@@ -36,12 +36,12 @@ class _KsHistoryScreenState extends State<KsHistoryScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('History Laporan'),
+        title: Text('History Laporan'),
         centerTitle: false,
         actions: [
           IconButton(
             tooltip: 'Refresh',
-            icon: const Icon(Icons.refresh_rounded),
+            icon: Icon(Icons.refresh_rounded),
             onPressed: () =>
                 context.read<LaporanProvider>().fetchLaporanHistory(),
           ),
@@ -91,30 +91,30 @@ class _KsHistoryScreenState extends State<KsHistoryScreen> {
                 size: 64,
                 color: AppColors.error.withValues(alpha: 0.5),
               ),
-              const SizedBox(height: 16),
-              const Text(
+              SizedBox(height: 16),
+              Text(
                 'Gagal Memuat Data',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
-                  color: AppColors.textPrimary,
+                  color: Theme.of(context).colorScheme.onSurface,
                 ),
               ),
-              const SizedBox(height: 8),
+              SizedBox(height: 8),
               Text(
                 prov.historyError!,
                 textAlign: TextAlign.center,
-                style: const TextStyle(
-                  color: AppColors.textSecondary,
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
                   fontSize: 13,
                 ),
               ),
-              const SizedBox(height: 24),
+              SizedBox(height: 24),
               FilledButton.icon(
                 onPressed: () =>
                     context.read<LaporanProvider>().fetchLaporanHistory(),
-                icon: const Icon(Icons.refresh),
-                label: const Text('Coba Lagi'),
+                icon: Icon(Icons.refresh),
+                label: Text('Coba Lagi'),
               ),
             ],
           ),
@@ -142,27 +142,27 @@ class _KsHistoryScreenState extends State<KsHistoryScreen> {
                         color: AppColors.primarySurface,
                         shape: BoxShape.circle,
                       ),
-                      child: const Icon(
+                      child: Icon(
                         Icons.history_toggle_off_rounded,
                         size: 48,
                         color: AppColors.primary,
                       ),
                     ),
-                    const SizedBox(height: 20),
-                    const Text(
+                    SizedBox(height: 20),
+                    Text(
                       'Belum Ada History',
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
-                        color: AppColors.textPrimary,
+                        color: Theme.of(context).colorScheme.onSurface,
                       ),
                     ),
-                    const SizedBox(height: 8),
-                    const Text(
+                    SizedBox(height: 8),
+                    Text(
                       'History laporan yang telah di-ACC atau\ndiminta Revisi akan muncul di sini.',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: AppColors.textSecondary,
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
                         fontSize: 13,
                       ),
                     ),
@@ -189,7 +189,7 @@ class _KsHistoryScreenState extends State<KsHistoryScreen> {
     return ListView.separated(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       itemCount: list.length,
-      separatorBuilder: (_, _) => const SizedBox(height: 10),
+      separatorBuilder: (_, _) => SizedBox(height: 10),
       itemBuilder: (_, i) => _HistoryCard(
         laporan: list[i],
         onTap: () => context.go('/ks/history/detail/${list[i].id}'),
@@ -217,7 +217,7 @@ class _KsHistoryScreenState extends State<KsHistoryScreen> {
                     .titleLarge
                     ?.copyWith(fontWeight: FontWeight.w700),
               ),
-              const SizedBox(width: 12),
+              SizedBox(width: 12),
               Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
@@ -227,7 +227,7 @@ class _KsHistoryScreenState extends State<KsHistoryScreen> {
                 ),
                 child: Text(
                   '${list.length} laporan',
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 12,
                     color: AppColors.primary,
                     fontWeight: FontWeight.w600,
@@ -236,7 +236,7 @@ class _KsHistoryScreenState extends State<KsHistoryScreen> {
               ),
             ],
           ),
-          const SizedBox(height: 6),
+          SizedBox(height: 6),
           Text(
             'Laporan yang telah ditindaklanjuti (ACC / Revisi)',
             style: Theme.of(context)
@@ -244,13 +244,13 @@ class _KsHistoryScreenState extends State<KsHistoryScreen> {
                 .bodySmall
                 ?.copyWith(color: AppColors.textSecondary),
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: 20),
           Container(
             width: double.infinity,
             decoration: BoxDecoration(
-              color: AppColors.surface,
+              color: Theme.of(context).colorScheme.surface,
               borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: AppColors.divider),
+              border: Border.all(color: Theme.of(context).colorScheme.outline),
               boxShadow: [
                 BoxShadow(
                   color: AppColors.shadow,
@@ -266,14 +266,14 @@ class _KsHistoryScreenState extends State<KsHistoryScreen> {
                 child: DataTable(
                   headingRowColor:
                       WidgetStateProperty.all(AppColors.background),
-                  headingTextStyle: const TextStyle(
+                  headingTextStyle: TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: 13,
-                    color: AppColors.textSecondary,
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
                   ),
-                  dataTextStyle: const TextStyle(
+                  dataTextStyle: TextStyle(
                     fontSize: 13,
-                    color: AppColors.textPrimary,
+                    color: Theme.of(context).colorScheme.onSurface,
                   ),
                   dividerThickness: 1,
                   columnSpacing: 24,
@@ -314,7 +314,7 @@ class _KsHistoryScreenState extends State<KsHistoryScreen> {
                               judulLaporan,
                               overflow: TextOverflow.ellipsis,
                               maxLines: 2,
-                              style: const TextStyle(
+                              style: TextStyle(
                                 color: AppColors.primary,
                                 fontWeight: FontWeight.w500,
                               ),
@@ -331,7 +331,7 @@ class _KsHistoryScreenState extends State<KsHistoryScreen> {
                           Tooltip(
                             message: 'Lihat Detail',
                             child: IconButton(
-                              icon: const Icon(Icons.open_in_new_rounded,
+                              icon: Icon(Icons.open_in_new_rounded,
                                   size: 18),
                               color: AppColors.primary,
                               onPressed: () => context
@@ -389,9 +389,9 @@ class _HistoryCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(14),
         child: Container(
       decoration: BoxDecoration(
-        color: AppColors.surface,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: AppColors.divider),
+        border: Border.all(color: Theme.of(context).colorScheme.outline),
         boxShadow: [
           BoxShadow(
             color: AppColors.shadow,
@@ -412,33 +412,33 @@ class _HistoryCard extends StatelessWidget {
                 Expanded(
                   child: Text(
                     judulLaporan,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.w600,
-                      color: AppColors.textPrimary,
+                      color: Theme.of(context).colorScheme.onSurface,
                     ),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
-                const SizedBox(width: 8),
+                SizedBox(width: 8),
                 _StatusChip(status: laporan.status, isAcc: isAcc),
               ],
             ),
-            const SizedBox(height: 12),
+            SizedBox(height: 12),
             _InfoRow(
               icon: Icons.category_outlined,
               label: 'Jenis',
               value: laporan.jenis.label,
             ),
-            const SizedBox(height: 6),
+            SizedBox(height: 6),
             _InfoRow(
               icon: Icons.person_outline_rounded,
               label: 'Diajukan Oleh',
               value: laporan.namaPengaju ?? '-',
             ),
-            const SizedBox(height: 6),
-            const Divider(height: 16, thickness: 1, color: AppColors.divider),
+            SizedBox(height: 6),
+            Divider(height: 16, thickness: 1, color: Theme.of(context).colorScheme.outline),
 
             // Tanggal aksi — dengan indikator warna sesuai status
             Row(
@@ -451,19 +451,19 @@ class _HistoryCard extends StatelessWidget {
                   ),
                   child: Icon(statusIcon, size: 14, color: statusColor),
                 ),
-                const SizedBox(width: 10),
+                SizedBox(width: 10),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
+                      Text(
                         'Tanggal Aksi',
                         style: TextStyle(
                           fontSize: 11,
-                          color: AppColors.textSecondary,
+                          color: Theme.of(context).colorScheme.onSurfaceVariant,
                         ),
                       ),
-                      const SizedBox(height: 2),
+                      SizedBox(height: 2),
                       Text(
                         tanggalAksiStr,
                         style: TextStyle(
@@ -522,7 +522,7 @@ class _StatusChip extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(icon, size: 12, color: color),
-          const SizedBox(width: 4),
+          SizedBox(width: 4),
           Text(
             label,
             style: TextStyle(
@@ -557,21 +557,21 @@ class _InfoRow extends StatelessWidget {
     return Row(
       children: [
         Icon(icon, size: 14, color: AppColors.textSecondary),
-        const SizedBox(width: 6),
+        SizedBox(width: 6),
         Text(
           '$label: ',
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 12,
-            color: AppColors.textSecondary,
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
           ),
         ),
         Expanded(
           child: Text(
             value,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w500,
-              color: AppColors.textPrimary,
+              color: Theme.of(context).colorScheme.onSurface,
             ),
             overflow: TextOverflow.ellipsis,
           ),

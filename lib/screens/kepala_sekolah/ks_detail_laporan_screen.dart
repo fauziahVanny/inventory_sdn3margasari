@@ -45,7 +45,7 @@ class _KsDetailLaporanScreenState extends State<KsDetailLaporanScreen> {
 
     if (laporan == null) {
       return Scaffold(
-        appBar: AppBar(title: const Text('Detail Laporan')),
+        appBar: AppBar(title: Text('Detail Laporan')),
         body: const Center(child: Text('Laporan tidak ditemukan')),
       );
     }
@@ -62,9 +62,9 @@ class _KsDetailLaporanScreenState extends State<KsDetailLaporanScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Detail Laporan'),
+        title: Text('Detail Laporan'),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
+          icon: Icon(Icons.arrow_back),
           onPressed: () => context.go('/ks/approval'),
         ),
       ),
@@ -78,9 +78,9 @@ class _KsDetailLaporanScreenState extends State<KsDetailLaporanScreen> {
               width: double.infinity,
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: AppColors.surface,
+                color: Theme.of(context).colorScheme.surface,
                 borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: AppColors.divider),
+                border: Border.all(color: Theme.of(context).colorScheme.outline),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -98,7 +98,7 @@ class _KsDetailLaporanScreenState extends State<KsDetailLaporanScreen> {
                       StatusBadge(status: laporan.status),
                     ],
                   ),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16),
                   _infoRow(context, 'Diajukan oleh', namaPengaju ?? '-'),
                   _infoRow(context, 'Tanggal Pengajuan', dateFormat.format(laporan.tanggalPengajuan)),
                   _infoRow(context, 'Jenis', laporan.jenis.label),
@@ -108,7 +108,7 @@ class _KsDetailLaporanScreenState extends State<KsDetailLaporanScreen> {
                 ],
               ),
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
 
             // Catatan revisi (jika ada)
             if (laporan.catatanRevisi != null && laporan.catatanRevisi!.isNotEmpty)
@@ -126,15 +126,15 @@ class _KsDetailLaporanScreenState extends State<KsDetailLaporanScreen> {
                   children: [
                     Row(
                       children: [
-                        const Icon(Icons.info_outline, color: AppColors.warning, size: 18),
-                        const SizedBox(width: 8),
+                        Icon(Icons.info_outline, color: AppColors.warning, size: 18),
+                        SizedBox(width: 8),
                         Text(
                           'Catatan Revisi',
                           style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.warning),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 8),
+                    SizedBox(height: 8),
                     Text(laporan.catatanRevisi!, style: Theme.of(context).textTheme.bodyMedium),
                   ],
                 ),
@@ -145,7 +145,7 @@ class _KsDetailLaporanScreenState extends State<KsDetailLaporanScreen> {
               'Preview Data Barang',
               style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: 8),
             ...barangList.take(5).map((b) => BarangCard(barang: b, showActions: false)),
             if (barangList.length > 5)
               Padding(
@@ -157,7 +157,7 @@ class _KsDetailLaporanScreenState extends State<KsDetailLaporanScreen> {
                   ),
                 ),
               ),
-            const SizedBox(height: 24),
+            SizedBox(height: 24),
 
             // Action buttons (hanya jika status diajukan)
             if (laporan.status == StatusLaporan.diajukan)
@@ -166,8 +166,8 @@ class _KsDetailLaporanScreenState extends State<KsDetailLaporanScreen> {
                   Expanded(
                     child: OutlinedButton.icon(
                       onPressed: () => _showRevisiDialog(context, laporanProv),
-                      icon: const Icon(Icons.replay, color: AppColors.warning),
-                      label: const Text('Revisi'),
+                      icon: Icon(Icons.replay, color: AppColors.warning),
+                      label: Text('Revisi'),
                       style: OutlinedButton.styleFrom(
                         foregroundColor: AppColors.warning,
                         side: const BorderSide(color: AppColors.warning),
@@ -175,13 +175,13 @@ class _KsDetailLaporanScreenState extends State<KsDetailLaporanScreen> {
                       ),
                     ),
                   ),
-                  const SizedBox(width: 12),
+                  SizedBox(width: 12),
                   Expanded(
                     flex: 2,
                     child: ElevatedButton.icon(
                       onPressed: () => _showAccDialog(context, laporanProv),
-                      icon: const Icon(Icons.verified),
-                      label: const Text('Setujui (ACC)'),
+                      icon: Icon(Icons.verified),
+                      label: Text('Setujui (ACC)'),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.kondisiLayak,
                         padding: const EdgeInsets.symmetric(vertical: 14),
@@ -190,7 +190,7 @@ class _KsDetailLaporanScreenState extends State<KsDetailLaporanScreen> {
                   ),
                 ],
               ),
-            const SizedBox(height: 24),
+            SizedBox(height: 24),
           ],
         ),
       ),
@@ -225,14 +225,14 @@ class _KsDetailLaporanScreenState extends State<KsDetailLaporanScreen> {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Setujui Laporan'),
-        content: const Text(
+        title: Text('Setujui Laporan'),
+        content: Text(
           'Dengan menyetujui laporan ini, tanda tangan digital Anda akan dibubuhkan secara otomatis pada dokumen PDF.\n\nLanjutkan?',
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: const Text('Batal'),
+            child: Text('Batal'),
           ),
           ElevatedButton.icon(
             onPressed: () {
@@ -246,8 +246,8 @@ class _KsDetailLaporanScreenState extends State<KsDetailLaporanScreen> {
               );
               context.go('/ks/approval');
             },
-            icon: const Icon(Icons.verified),
-            label: const Text('Setujui'),
+            icon: Icon(Icons.verified),
+            label: Text('Setujui'),
             style: ElevatedButton.styleFrom(backgroundColor: AppColors.kondisiLayak),
           ),
         ],
@@ -261,12 +261,12 @@ class _KsDetailLaporanScreenState extends State<KsDetailLaporanScreen> {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Kembalikan untuk Revisi'),
+        title: Text('Kembalikan untuk Revisi'),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Text('Berikan catatan revisi untuk OPS:'),
-            const SizedBox(height: 12),
+            Text('Berikan catatan revisi untuk OPS:'),
+            SizedBox(height: 12),
             TextField(
               controller: catatanController,
               maxLines: 3,
@@ -279,7 +279,7 @@ class _KsDetailLaporanScreenState extends State<KsDetailLaporanScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: const Text('Batal'),
+            child: Text('Batal'),
           ),
           ElevatedButton(
             onPressed: () {
@@ -294,7 +294,7 @@ class _KsDetailLaporanScreenState extends State<KsDetailLaporanScreen> {
               context.go('/ks/approval');
             },
             style: ElevatedButton.styleFrom(backgroundColor: AppColors.warning),
-            child: const Text('Kirim Revisi'),
+            child: Text('Kirim Revisi'),
           ),
         ],
       ),

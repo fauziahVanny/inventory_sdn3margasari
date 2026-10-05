@@ -57,10 +57,10 @@ class _WkBarangListScreenState extends State<WkBarangListScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Daftar Barang'),
+        title: Text('Daftar Barang'),
         actions: [
           IconButton(
-            icon: const Icon(Icons.print, color: AppColors.primary),
+            icon: Icon(Icons.print, color: AppColors.primary),
             tooltip: 'Cetak Laporan PDF',
             onPressed: () => PdfHelper.generateAndDownloadWkPdf(context, barangList, auth.currentUser!),
           ),
@@ -87,10 +87,10 @@ class _WkBarangListScreenState extends State<WkBarangListScreen> {
               onChanged: (v) => barangProv.setSearch(v),
               decoration: InputDecoration(
                 hintText: 'Cari barang...',
-                prefixIcon: const Icon(Icons.search),
+                prefixIcon: Icon(Icons.search),
                 suffixIcon: barangProv.searchQuery != null && barangProv.searchQuery!.isNotEmpty
                     ? IconButton(
-                        icon: const Icon(Icons.clear),
+                        icon: Icon(Icons.clear),
                         onPressed: () => barangProv.setSearch(''),
                       )
                     : null,
@@ -158,8 +158,8 @@ class _WkBarangListScreenState extends State<WkBarangListScreen> {
                           height: 52,
                           child: ElevatedButton.icon(
                             onPressed: () => PdfHelper.generateAndDownloadWkPdf(context, barangList, auth.currentUser!),
-                            icon: const Icon(Icons.picture_as_pdf),
-                            label: const Text('Cetak Dokumen PDF'),
+                            icon: Icon(Icons.picture_as_pdf),
+                            label: Text('Cetak Dokumen PDF'),
                           ),
                         ),
                       ),
@@ -170,7 +170,7 @@ class _WkBarangListScreenState extends State<WkBarangListScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => context.go('/wk/barang/tambah'),
-        child: const Icon(Icons.add),
+        child: Icon(Icons.add),
       ),
     );
   }
@@ -251,7 +251,7 @@ class _WkBarangListScreenState extends State<WkBarangListScreen> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -264,21 +264,21 @@ class _WkBarangListScreenState extends State<WkBarangListScreen> {
                           prov.resetFilters();
                           setSheetState(() {});
                         },
-                        icon: const Icon(Icons.refresh, size: 16),
-                        label: const Text('Reset'),
+                        icon: Icon(Icons.refresh, size: 16),
+                        label: Text('Reset'),
                         style: TextButton.styleFrom(
                           foregroundColor: AppColors.error,
                         ),
                       ),
                     ],
                   ),
-                  const Divider(),
-                  const SizedBox(height: 12),
+                  Divider(),
+                  SizedBox(height: 12),
                   // --- Kondisi ---
                   Row(
                     children: [
-                      const Icon(Icons.layers_outlined, size: 16),
-                      const SizedBox(width: 6),
+                      Icon(Icons.layers_outlined, size: 16),
+                      SizedBox(width: 6),
                       Text('Kondisi',
                           style: Theme.of(ctx).textTheme.titleSmall?.copyWith(
                                 fontWeight: FontWeight.w700,
@@ -286,7 +286,7 @@ class _WkBarangListScreenState extends State<WkBarangListScreen> {
                               )),
                     ],
                   ),
-                  const SizedBox(height: 10),
+                  SizedBox(height: 10),
                   Wrap(
                     spacing: 8,
                     runSpacing: 8,
@@ -303,12 +303,12 @@ class _WkBarangListScreenState extends State<WkBarangListScreen> {
                       );
                     }).toList(),
                   ),
-                  const SizedBox(height: 20),
+                  SizedBox(height: 20),
                   // --- Kategori ---
                   Row(
                     children: [
-                      const Icon(Icons.category_outlined, size: 16),
-                      const SizedBox(width: 6),
+                      Icon(Icons.category_outlined, size: 16),
+                      SizedBox(width: 6),
                       Text('Kategori',
                           style: Theme.of(ctx).textTheme.titleSmall?.copyWith(
                                 fontWeight: FontWeight.w700,
@@ -316,7 +316,7 @@ class _WkBarangListScreenState extends State<WkBarangListScreen> {
                               )),
                     ],
                   ),
-                  const SizedBox(height: 10),
+                  SizedBox(height: 10),
                   Wrap(
                     spacing: 8,
                     runSpacing: 8,
@@ -333,7 +333,7 @@ class _WkBarangListScreenState extends State<WkBarangListScreen> {
                       );
                     }).toList(),
                   ),
-                  const SizedBox(height: 24),
+                  SizedBox(height: 24),
                   // --- Tombol Terapkan ---
                   SizedBox(
                     width: double.infinity,
@@ -347,7 +347,7 @@ class _WkBarangListScreenState extends State<WkBarangListScreen> {
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
-                      child: const Text('Terapkan Filter',
+                      child: Text('Terapkan Filter',
                           style: TextStyle(fontWeight: FontWeight.w600)),
                     ),
                   ),
@@ -364,12 +364,12 @@ class _WkBarangListScreenState extends State<WkBarangListScreen> {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Hapus Barang'),
+        title: Text('Hapus Barang'),
         content: Text('Apakah Anda yakin ingin menghapus "$nama"?'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: const Text('Batal'),
+            child: Text('Batal'),
           ),
           ElevatedButton(
             onPressed: () async {
@@ -382,7 +382,7 @@ class _WkBarangListScreenState extends State<WkBarangListScreen> {
               }
             },
             style: ElevatedButton.styleFrom(backgroundColor: AppColors.error),
-            child: const Text('Hapus'),
+            child: Text('Hapus'),
           ),
         ],
       ),

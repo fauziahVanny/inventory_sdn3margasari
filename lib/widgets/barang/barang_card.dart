@@ -27,9 +27,9 @@ class BarangCard extends StatelessWidget {
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
         decoration: BoxDecoration(
-          color: AppColors.surface,
+          color: Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: AppColors.divider.withValues(alpha: 0.5)),
+          border: Border.all(color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.35)),
           boxShadow: [
             BoxShadow(
               color: AppColors.shadow,
@@ -60,7 +60,7 @@ class BarangCard extends StatelessWidget {
                       size: 24,
                     ),
                   ),
-                  const SizedBox(width: 12),
+                  SizedBox(width: 12),
                   // Info
                   Expanded(
                     child: Column(
@@ -72,11 +72,11 @@ class BarangCard extends StatelessWidget {
                             fontWeight: FontWeight.w600,
                           ),
                         ),
-                        const SizedBox(height: 4),
+                        SizedBox(height: 4),
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                           decoration: BoxDecoration(
-                            color: AppColors.background,
+                            color: Theme.of(context).scaffoldBackgroundColor,
                             borderRadius: BorderRadius.circular(6),
                           ),
                           child: Text(
@@ -96,12 +96,12 @@ class BarangCard extends StatelessWidget {
                   _buildConditionChips(context, barang),
                 ],
               ),
-              const SizedBox(height: 12),
+              SizedBox(height: 12),
               // Info detail
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: AppColors.background,
+                  color: Theme.of(context).scaffoldBackgroundColor,
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Row(
@@ -111,7 +111,7 @@ class BarangCard extends StatelessWidget {
                       Icons.category_outlined,
                       barang.namaKategori ?? '-',
                     ),
-                    const SizedBox(width: 16),
+                    SizedBox(width: 16),
                     _infoChip(
                       context,
                       Icons.room_outlined,
@@ -141,10 +141,10 @@ class BarangCard extends StatelessWidget {
                 ),
               ),
               if (barang.merek != null && barang.merek!.isNotEmpty) ...[
-                const SizedBox(height: 8),
+                SizedBox(height: 8),
                 Text('Merek: ${barang.merek}', style: Theme.of(context).textTheme.bodySmall),
               ],
-              const SizedBox(height: 4),
+              SizedBox(height: 4),
               Text(
                 'Tanggal Masuk: ${barang.tanggalPerolehan.day}/${barang.tanggalPerolehan.month}/${barang.tanggalPerolehan.year}',
                 style: Theme.of(context).textTheme.bodySmall,
@@ -152,28 +152,28 @@ class BarangCard extends StatelessWidget {
               // Kondisi items
               // Actions
               if (showActions && (onEdit != null || onDelete != null)) ...[
-                const SizedBox(height: 8),
+                SizedBox(height: 8),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     if (onEdit != null)
                       TextButton.icon(
                         onPressed: onEdit,
-                        icon: const Icon(Icons.edit_outlined, size: 18),
-                        label: const Text('Edit'),
+                        icon: Icon(Icons.edit_outlined, size: 18),
+                        label: Text('Edit'),
                         style: TextButton.styleFrom(
                           foregroundColor: AppColors.primary,
-                          textStyle: const TextStyle(fontSize: 13),
+                          textStyle: TextStyle(fontSize: 13),
                         ),
                       ),
                     if (onDelete != null)
                       TextButton.icon(
                         onPressed: onDelete,
-                        icon: const Icon(Icons.delete_outline, size: 18),
-                        label: const Text('Hapus'),
+                        icon: Icon(Icons.delete_outline, size: 18),
+                        label: Text('Hapus'),
                         style: TextButton.styleFrom(
                           foregroundColor: AppColors.error,
-                          textStyle: const TextStyle(fontSize: 13),
+                          textStyle: TextStyle(fontSize: 13),
                         ),
                       ),
                   ],
@@ -223,7 +223,7 @@ class BarangCard extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Icon(icon, size: 14, color: AppColors.textSecondary),
-        const SizedBox(width: 4),
+        SizedBox(width: 4),
         Text(
           text,
           style: Theme.of(context).textTheme.bodySmall?.copyWith(fontSize: 11),

@@ -55,10 +55,10 @@ class _OpsMasterScreenState extends State<OpsMasterScreen> {
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
-        title: const Text('Data Master'),
+        title: Text('Data Master'),
         actions: [
           IconButton(
-            icon: const Icon(Icons.refresh),
+            icon: Icon(Icons.refresh),
             onPressed: _loadCounts,
             tooltip: 'Refresh',
           ),
@@ -98,7 +98,7 @@ class _OpsMasterScreenState extends State<OpsMasterScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
+                          Text(
                             'Data Master',
                             style: TextStyle(
                               fontSize: 20,
@@ -106,7 +106,7 @@ class _OpsMasterScreenState extends State<OpsMasterScreen> {
                               color: Colors.white,
                             ),
                           ),
-                          const SizedBox(height: 6),
+                          SizedBox(height: 6),
                           Text(
                             'Kelola data referensi sistem inventaris sekolah',
                             style: TextStyle(
@@ -123,12 +123,12 @@ class _OpsMasterScreenState extends State<OpsMasterScreen> {
                         color: Colors.white.withValues(alpha: 0.15),
                         borderRadius: BorderRadius.circular(16),
                       ),
-                      child: const Icon(Icons.storage_rounded, color: Colors.white, size: 32),
+                      child: Icon(Icons.storage_rounded, color: Colors.white, size: 32),
                     ),
                   ],
                 ),
               ),
-              const SizedBox(height: 24),
+              SizedBox(height: 24),
 
               Text(
                 'Pilih Data Master',
@@ -136,7 +136,7 @@ class _OpsMasterScreenState extends State<OpsMasterScreen> {
                   fontWeight: FontWeight.w600,
                 ),
               ),
-              const SizedBox(height: 12),
+              SizedBox(height: 12),
 
               // Menu Grid
               GridView(
@@ -187,7 +187,7 @@ class _OpsMasterScreenState extends State<OpsMasterScreen> {
                   ),
                 ],
               ),
-              const SizedBox(height: 24),
+              SizedBox(height: 24),
 
               // Info box
               Container(
@@ -201,13 +201,13 @@ class _OpsMasterScreenState extends State<OpsMasterScreen> {
                 child: Row(
                   children: [
                     Icon(Icons.info_outline, color: AppColors.info, size: 20),
-                    const SizedBox(width: 12),
+                    SizedBox(width: 12),
                     Expanded(
                       child: Text(
                         'Data master merupakan data referensi yang digunakan di seluruh sistem inventaris. Perubahan akan langsung berdampak pada data barang dan laporan.',
                         style: TextStyle(
                           fontSize: 12.5,
-                          color: AppColors.textSecondary,
+                          color: Theme.of(context).colorScheme.onSurfaceVariant,
                           height: 1.5,
                         ),
                       ),
@@ -236,9 +236,9 @@ class _OpsMasterScreenState extends State<OpsMasterScreen> {
       child: Container(
         padding: const EdgeInsets.all(18),
         decoration: BoxDecoration(
-          color: AppColors.surface,
+          color: Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.circular(18),
-          border: Border.all(color: AppColors.divider.withValues(alpha: 0.6)),
+          border: Border.all(color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.6)),
           boxShadow: [
             BoxShadow(
               color: color.withValues(alpha: 0.08),
@@ -264,23 +264,23 @@ class _OpsMasterScreenState extends State<OpsMasterScreen> {
             // Title
             Text(
               title,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.w700,
-                color: AppColors.textPrimary,
+                color: Theme.of(context).colorScheme.onSurface,
               ),
             ),
-            const SizedBox(height: 3),
+            SizedBox(height: 3),
             Text(
               subtitle,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 11,
-                color: AppColors.textSecondary,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
               ),
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
             ),
-            const SizedBox(height: 10),
+            SizedBox(height: 10),
             // Count badge
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),

@@ -132,7 +132,7 @@ class _WkTambahBarangScreenState extends State<WkTambahBarangScreen> {
       appBar: AppBar(
         title: Text(isEditing ? 'Edit Barang' : 'Tambah Barang'),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
+          icon: Icon(Icons.arrow_back),
           onPressed: () {
             if (context.read<AuthProvider>().currentUser?.role == UserRole.ops) {
               context.go('/ops/rekap');
@@ -177,7 +177,7 @@ class _WkTambahBarangScreenState extends State<WkTambahBarangScreen> {
                     fillColor: Colors.grey.shade100,
                   ),
                 ),
-              const SizedBox(height: 16),
+              SizedBox(height: 16),
               // Kode barang preview
               if (_generatedKode.isNotEmpty || isEditing)
                 Container(
@@ -190,8 +190,8 @@ class _WkTambahBarangScreenState extends State<WkTambahBarangScreen> {
                   ),
                   child: Row(
                     children: [
-                      const Icon(Icons.qr_code, color: AppColors.primary, size: 20),
-                      const SizedBox(width: 12),
+                      Icon(Icons.qr_code, color: AppColors.primary, size: 20),
+                      SizedBox(width: 12),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -220,7 +220,7 @@ class _WkTambahBarangScreenState extends State<WkTambahBarangScreen> {
                 decoration: const InputDecoration(hintText: 'Contoh: Meja Siswa'),
                 validator: (v) => v == null || v.isEmpty ? 'Wajib diisi' : null,
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: 16),
               
               // Merek Barang
               _buildLabel('Merek Barang (Opsional)'),
@@ -228,7 +228,7 @@ class _WkTambahBarangScreenState extends State<WkTambahBarangScreen> {
                 controller: _merekController,
                 decoration: const InputDecoration(hintText: 'Contoh: Olympic, Maspion, dll'),
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: 16),
 
               // Kategori
               _buildLabel('Kategori'),
@@ -244,7 +244,7 @@ class _WkTambahBarangScreenState extends State<WkTambahBarangScreen> {
                   _updateKodeBarang();
                 },
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: 16),
 
               // Ruangan
               _buildLabel('Ruangan'),
@@ -260,7 +260,7 @@ class _WkTambahBarangScreenState extends State<WkTambahBarangScreen> {
                   _updateKodeBarang();
                 },
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: 16),
 
               _buildLabel('Jumlah (Sesuai Kondisi)'),
               Row(
@@ -270,7 +270,7 @@ class _WkTambahBarangScreenState extends State<WkTambahBarangScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text('Layak', style: TextStyle(fontSize: 12, color: Colors.grey[600])),
-                        const SizedBox(height: 4),
+                        SizedBox(height: 4),
                         TextFormField(
                           controller: _jumlahLayakController,
                           keyboardType: TextInputType.number,
@@ -280,13 +280,13 @@ class _WkTambahBarangScreenState extends State<WkTambahBarangScreen> {
                       ],
                     ),
                   ),
-                  const SizedBox(width: 8),
+                  SizedBox(width: 8),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text('R.Sedang', style: TextStyle(fontSize: 12, color: Colors.grey[600])),
-                        const SizedBox(height: 4),
+                        SizedBox(height: 4),
                         TextFormField(
                           controller: _jumlahRusakSedangController,
                           keyboardType: TextInputType.number,
@@ -296,13 +296,13 @@ class _WkTambahBarangScreenState extends State<WkTambahBarangScreen> {
                       ],
                     ),
                   ),
-                  const SizedBox(width: 8),
+                  SizedBox(width: 8),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text('R.Berat', style: TextStyle(fontSize: 12, color: Colors.grey[600])),
-                        const SizedBox(height: 4),
+                        SizedBox(height: 4),
                         TextFormField(
                           controller: _jumlahRusakBeratController,
                           keyboardType: TextInputType.number,
@@ -312,13 +312,13 @@ class _WkTambahBarangScreenState extends State<WkTambahBarangScreen> {
                       ],
                     ),
                   ),
-                  const SizedBox(width: 8),
+                  SizedBox(width: 8),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text('Hilang', style: TextStyle(fontSize: 12, color: Colors.grey[600])),
-                        const SizedBox(height: 4),
+                        SizedBox(height: 4),
                         TextFormField(
                           controller: _jumlahHilangController,
                           keyboardType: TextInputType.number,
@@ -330,7 +330,7 @@ class _WkTambahBarangScreenState extends State<WkTambahBarangScreen> {
                   ),
                 ],
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: 16),
               
               _buildLabel('Jumlah Awal Keseluruhan'),
               TextFormField(
@@ -343,7 +343,7 @@ class _WkTambahBarangScreenState extends State<WkTambahBarangScreen> {
                   return null;
                 },
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: 16),
 
               // Keterangan Tambahan
               _buildLabel('Keterangan Tambahan (Opsional)'),
@@ -352,7 +352,7 @@ class _WkTambahBarangScreenState extends State<WkTambahBarangScreen> {
                 maxLines: 3,
                 decoration: const InputDecoration(hintText: 'Tuliskan rincian kerusakan atau info lainnya...'),
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: 16),
 
               // Sumber Dana
               _buildLabel('Sumber Dana'),
@@ -364,7 +364,7 @@ class _WkTambahBarangScreenState extends State<WkTambahBarangScreen> {
                 }).toList(),
                 onChanged: (v) => setState(() => _selectedSumber = v!),
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: 16),
 
               // Tanggal Perolehan
               _buildLabel('Tanggal Perolehan'),
@@ -373,14 +373,14 @@ class _WkTambahBarangScreenState extends State<WkTambahBarangScreen> {
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
                   decoration: BoxDecoration(
-                    color: AppColors.surface,
+                    color: Theme.of(context).colorScheme.surface,
                     borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: AppColors.divider),
+                    border: Border.all(color: Theme.of(context).colorScheme.outline),
                   ),
                   child: Row(
                     children: [
-                      const Icon(Icons.calendar_today, size: 20, color: AppColors.textSecondary),
-                      const SizedBox(width: 12),
+                      Icon(Icons.calendar_today, size: 20, color: AppColors.textSecondary),
+                      SizedBox(width: 12),
                       Text(
                         DateFormat('dd MMMM yyyy', 'id').format(_tanggalPerolehan),
                         style: Theme.of(context).textTheme.bodyLarge,
@@ -389,7 +389,7 @@ class _WkTambahBarangScreenState extends State<WkTambahBarangScreen> {
                   ),
                 ),
               ),
-              const SizedBox(height: 32),
+              SizedBox(height: 32),
 
               // Submit button
               SizedBox(
@@ -399,7 +399,7 @@ class _WkTambahBarangScreenState extends State<WkTambahBarangScreen> {
                   child: Text(isEditing ? 'Simpan Perubahan' : 'Tambah Barang'),
                 ),
               ),
-              const SizedBox(height: 24),
+              SizedBox(height: 24),
             ],
           ),
         ),

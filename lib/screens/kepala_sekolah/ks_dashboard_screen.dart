@@ -55,7 +55,7 @@ class _KsDashboardScreenState extends State<KsDashboardScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Dashboard Kepala Sekolah'),
+        title: Text('Dashboard Kepala Sekolah'),
         actions: [
           Consumer<ThemeProvider>(
             builder: (context, themeProvider, _) => IconButton(
@@ -67,7 +67,7 @@ class _KsDashboardScreenState extends State<KsDashboardScreen> {
               onPressed: themeProvider.toggleTheme,
             ),
           ),
-          const SizedBox(width: 4),
+          SizedBox(width: 4),
         ],
       ),
       drawer: const AppDrawer(),
@@ -107,20 +107,20 @@ class _KsDashboardScreenState extends State<KsDashboardScreen> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text(
+                              Text(
                                 'Selamat Datang 👋',
                                 style: TextStyle(fontSize: 14, color: Colors.white70),
                               ),
-                              const SizedBox(height: 4),
+                              SizedBox(height: 4),
                               Text(
                                 user.nama,
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.w700,
                                   color: Colors.white,
                                 ),
                               ),
-                              const SizedBox(height: 4),
+                              SizedBox(height: 4),
                               Text(
                                 'Kepala Sekolah • SDN 3 Margasari',
                                 style: TextStyle(
@@ -137,14 +137,14 @@ class _KsDashboardScreenState extends State<KsDashboardScreen> {
                             color: Colors.white.withValues(alpha: 0.15),
                             borderRadius: BorderRadius.circular(14),
                           ),
-                          child: const Icon(Icons.school, color: Colors.white, size: 28),
+                          child: Icon(Icons.school, color: Colors.white, size: 28),
                         ),
                       ],
                     ),
                   ],
                 ),
               ),
-              const SizedBox(height: 24),
+              SizedBox(height: 24),
 
               // Statistik
               if (dashboardProv.isLoading)
@@ -187,7 +187,7 @@ class _KsDashboardScreenState extends State<KsDashboardScreen> {
                     ),
                   ],
                 ),
-              const SizedBox(height: 24),
+              SizedBox(height: 24),
 
               // Laporan menunggu ACC
               Row(
@@ -200,11 +200,11 @@ class _KsDashboardScreenState extends State<KsDashboardScreen> {
                   if (menungguAcc.isNotEmpty)
                     TextButton(
                       onPressed: () => context.go('/ks/approval'),
-                      child: const Text('Lihat Semua'),
+                      child: Text('Lihat Semua'),
                     ),
                 ],
               ),
-              const SizedBox(height: 8),
+              SizedBox(height: 8),
               if (laporanProv.isLoading)
                 const Center(child: CircularProgressIndicator())
               else if (menungguAcc.isEmpty)
@@ -212,14 +212,14 @@ class _KsDashboardScreenState extends State<KsDashboardScreen> {
                   width: double.infinity,
                   padding: const EdgeInsets.all(32),
                   decoration: BoxDecoration(
-                    color: AppColors.surface,
+                    color: Theme.of(context).colorScheme.surface,
                     borderRadius: BorderRadius.circular(16),
-                    border: Border.all(color: AppColors.divider),
+                    border: Border.all(color: Theme.of(context).colorScheme.outline),
                   ),
                   child: Column(
                     children: [
                       Icon(Icons.check_circle_outline, size: 48, color: AppColors.kondisiLayak.withValues(alpha: 0.5)),
-                      const SizedBox(height: 12),
+                      SizedBox(height: 12),
                       Text(
                         'Tidak ada laporan menunggu',
                         style: Theme.of(context).textTheme.bodyMedium,

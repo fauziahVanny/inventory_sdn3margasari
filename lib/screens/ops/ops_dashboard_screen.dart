@@ -68,7 +68,7 @@ class _OpsDashboardScreenState extends State<OpsDashboardScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Dashboard OPS'),
+        title: Text('Dashboard OPS'),
         actions: [
           Consumer<ThemeProvider>(
             builder: (context, themeProvider, _) => IconButton(
@@ -80,7 +80,7 @@ class _OpsDashboardScreenState extends State<OpsDashboardScreen> {
               onPressed: themeProvider.toggleTheme,
             ),
           ),
-          const SizedBox(width: 4),
+          SizedBox(width: 4),
         ],
       ),
       drawer: const AppDrawer(),
@@ -122,13 +122,13 @@ class _OpsDashboardScreenState extends State<OpsDashboardScreen> {
                             children: [
                               Text(
                                 'Halo, ${user.nama} 👋',
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.w700,
                                   color: Colors.white,
                                 ),
                               ),
-                              const SizedBox(height: 4),
+                              SizedBox(height: 4),
                               Text(
                                 'Operator Sekolah • SDN 3 Margasari',
                                 style: TextStyle(
@@ -145,21 +145,21 @@ class _OpsDashboardScreenState extends State<OpsDashboardScreen> {
                             color: Colors.white.withValues(alpha: 0.15),
                             borderRadius: BorderRadius.circular(14),
                           ),
-                          child: const Icon(Icons.admin_panel_settings, color: Colors.white, size: 28),
+                          child: Icon(Icons.admin_panel_settings, color: Colors.white, size: 28),
                         ),
                       ],
                     ),
                   ],
                 ),
               ),
-              const SizedBox(height: 24),
+              SizedBox(height: 24),
 
               // Menu Cepat
               Text(
                 'Menu Cepat',
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
               ),
-              const SizedBox(height: 12),
+              SizedBox(height: 12),
               Row(
                 children: [
                   Expanded(
@@ -171,7 +171,7 @@ class _OpsDashboardScreenState extends State<OpsDashboardScreen> {
                       route: '/ops/master',
                     ),
                   ),
-                  const SizedBox(width: 12),
+                  SizedBox(width: 12),
                   Expanded(
                     child: _quickMenuCard(
                       context,
@@ -183,14 +183,14 @@ class _OpsDashboardScreenState extends State<OpsDashboardScreen> {
                   ),
                 ],
               ),
-              const SizedBox(height: 24),
+              SizedBox(height: 24),
 
               // Statistik Inventaris
               Text(
                 'Ringkasan Inventaris Sekolah',
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
               ),
-              const SizedBox(height: 12),
+              SizedBox(height: 12),
               if (dashboardProv.isLoading)
                 const Center(child: CircularProgressIndicator())
               else
@@ -237,14 +237,14 @@ class _OpsDashboardScreenState extends State<OpsDashboardScreen> {
                     ),
                   ],
                 ),
-              const SizedBox(height: 24),
+              SizedBox(height: 24),
 
               // Statistik Laporan
               Text(
                 'Status Laporan',
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
               ),
-              const SizedBox(height: 12),
+              SizedBox(height: 12),
               if (dashboardProv.isLoading)
                 const Center(child: CircularProgressIndicator())
               else
@@ -252,9 +252,9 @@ class _OpsDashboardScreenState extends State<OpsDashboardScreen> {
                   width: double.infinity,
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: AppColors.surface,
+                    color: Theme.of(context).colorScheme.surface,
                     borderRadius: BorderRadius.circular(16),
-                    border: Border.all(color: AppColors.divider.withValues(alpha: 0.5)),
+                    border: Border.all(color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.3)),
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -266,7 +266,7 @@ class _OpsDashboardScreenState extends State<OpsDashboardScreen> {
                     ],
                   ),
                 ),
-              const SizedBox(height: 24),
+              SizedBox(height: 24),
 
               // Data Per Kelas
               Row(
@@ -278,11 +278,11 @@ class _OpsDashboardScreenState extends State<OpsDashboardScreen> {
                   ),
                   TextButton(
                     onPressed: () => context.go('/ops/rekap'),
-                    child: const Text('Lihat Semua'),
+                    child: Text('Lihat Semua'),
                   ),
                 ],
               ),
-              const SizedBox(height: 8),
+              SizedBox(height: 8),
               if (_isLoadingKelas)
                 const Center(child: CircularProgressIndicator())
               else if (_kelasList.isEmpty)
@@ -292,9 +292,9 @@ class _OpsDashboardScreenState extends State<OpsDashboardScreen> {
                   return Container(
                     margin: const EdgeInsets.only(bottom: 8),
                     decoration: BoxDecoration(
-                      color: AppColors.surface,
+                      color: Theme.of(context).colorScheme.surface,
                       borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: AppColors.divider.withValues(alpha: 0.5)),
+                      border: Border.all(color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.3)),
                     ),
                     child: ListTile(
                       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
@@ -302,13 +302,13 @@ class _OpsDashboardScreenState extends State<OpsDashboardScreen> {
                         width: 44,
                         height: 44,
                         decoration: BoxDecoration(
-                          color: AppColors.primarySurface,
+                          color: AppColors.primary.withValues(alpha: 0.12),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Center(
                           child: Text(
                             kelas.namaKelas.replaceAll('Kelas ', ''),
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.w700,
                               color: AppColors.primary,
@@ -318,13 +318,23 @@ class _OpsDashboardScreenState extends State<OpsDashboardScreen> {
                       ),
                       title: Text(
                         kelas.namaKelas,
-                        style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 15,
+                          color: Theme.of(context).colorScheme.onSurface,
+                        ),
                       ),
-                      subtitle: const Text(
+                      subtitle: Text(
                         'Detail Kelas',
-                        style: TextStyle(fontSize: 12),
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Theme.of(context).colorScheme.onSurfaceVariant,
+                        ),
                       ),
-                      trailing: const Icon(Icons.chevron_right),
+                      trailing: Icon(
+                        Icons.chevron_right,
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      ),
                       onTap: () => context.go('/ops/kelas/${kelas.id}'),
                     ),
                   );
@@ -343,7 +353,7 @@ class _OpsDashboardScreenState extends State<OpsDashboardScreen> {
           width: 44,
           height: 44,
           decoration: BoxDecoration(
-            color: color.withValues(alpha: 0.1),
+            color: color.withValues(alpha: 0.15),
             shape: BoxShape.circle,
           ),
           child: Center(
@@ -357,10 +367,13 @@ class _OpsDashboardScreenState extends State<OpsDashboardScreen> {
             ),
           ),
         ),
-        const SizedBox(height: 6),
+        SizedBox(height: 6),
         Text(
           label,
-          style: TextStyle(fontSize: 11, color: AppColors.textSecondary),
+          style: TextStyle(
+            fontSize: 11,
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
+          ),
         ),
       ],
     );
@@ -377,12 +390,12 @@ class _OpsDashboardScreenState extends State<OpsDashboardScreen> {
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
         decoration: BoxDecoration(
-          color: AppColors.surface,
+          color: Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: AppColors.divider.withValues(alpha: 0.5)),
+          border: Border.all(color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.3)),
           boxShadow: [
             BoxShadow(
-              color: color.withValues(alpha: 0.1),
+              color: color.withValues(alpha: 0.12),
               blurRadius: 10,
               offset: const Offset(0, 4),
             ),
@@ -393,18 +406,18 @@ class _OpsDashboardScreenState extends State<OpsDashboardScreen> {
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: color.withValues(alpha: 0.1),
+                color: color.withValues(alpha: 0.15),
                 shape: BoxShape.circle,
               ),
               child: Icon(icon, color: color, size: 24),
             ),
-            const SizedBox(height: 10),
+            SizedBox(height: 10),
             Text(
               title,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 13,
                 fontWeight: FontWeight.w600,
-                color: AppColors.textPrimary,
+                color: Theme.of(context).colorScheme.onSurface,
               ),
               textAlign: TextAlign.center,
             ),

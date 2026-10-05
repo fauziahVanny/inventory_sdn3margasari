@@ -17,7 +17,7 @@ class KsApprovalScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Persetujuan Laporan'),
+        title: Text('Persetujuan Laporan'),
       ),
       drawer: const AppDrawer(),
       body: menungguAcc.isEmpty

@@ -16,13 +16,13 @@ class ProfileScreen extends StatelessWidget {
     final namaKelas = user.namaKelas;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Profil')),
+      appBar: AppBar(title: Text('Profil')),
       drawer: const AppDrawer(),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            const SizedBox(height: 20),
+            SizedBox(height: 20),
             // Avatar
             Container(
               width: 100,
@@ -45,7 +45,7 @@ class ProfileScreen extends StatelessWidget {
               child: Center(
                 child: Text(
                   user.nama.isNotEmpty ? user.nama[0].toUpperCase() : '?',
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 40,
                     fontWeight: FontWeight.w700,
                     color: Colors.white,
@@ -53,13 +53,13 @@ class ProfileScreen extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
             Text(
               user.nama,
               style: Theme.of(context).textTheme.headlineSmall,
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 4),
+            SizedBox(height: 4),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
               decoration: BoxDecoration(
@@ -68,41 +68,41 @@ class ProfileScreen extends StatelessWidget {
               ),
               child: Text(
                 user.role.label,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.w600,
                   color: AppColors.primary,
                 ),
               ),
             ),
-            const SizedBox(height: 32),
+            SizedBox(height: 32),
 
             // Info card
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: AppColors.surface,
+                color: Theme.of(context).colorScheme.surface,
                 borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: AppColors.divider),
+                border: Border.all(color: Theme.of(context).colorScheme.outline),
               ),
               child: Column(
                 children: [
                   _profileRow(context, Icons.person_outline, 'Nama Lengkap', user.nama),
-                  const Divider(height: 24),
+                  Divider(height: 24),
                   _profileRow(context, Icons.badge_outlined, 'Username', user.username),
-                  const Divider(height: 24),
+                  Divider(height: 24),
                   _profileRow(context, Icons.work_outline, 'Peran', user.role.label),
                   if (namaKelas != null) ...[
-                    const Divider(height: 24),
+                    Divider(height: 24),
                     _profileRow(context, Icons.class_outlined, 'Kelas', namaKelas),
                   ],
-                  const Divider(height: 24),
+                  Divider(height: 24),
                   _profileRow(context, Icons.school_outlined, 'Sekolah', 'SDN 3 Margasari Purwakarta'),
                 ],
               ),
             ),
-            const SizedBox(height: 24),
+            SizedBox(height: 24),
 
             // Logout button
             SizedBox(
@@ -113,12 +113,12 @@ class ProfileScreen extends StatelessWidget {
                   showDialog(
                     context: context,
                     builder: (ctx) => AlertDialog(
-                      title: const Text('Konfirmasi'),
-                      content: const Text('Apakah Anda yakin ingin keluar?'),
+                      title: Text('Konfirmasi'),
+                      content: Text('Apakah Anda yakin ingin keluar?'),
                       actions: [
                         TextButton(
                           onPressed: () => Navigator.pop(ctx),
-                          child: const Text('Batal'),
+                          child: Text('Batal'),
                         ),
                         ElevatedButton(
                           onPressed: () {
@@ -127,14 +127,14 @@ class ProfileScreen extends StatelessWidget {
                             context.go('/login');
                           },
                           style: ElevatedButton.styleFrom(backgroundColor: AppColors.error),
-                          child: const Text('Keluar'),
+                          child: Text('Keluar'),
                         ),
                       ],
                     ),
                   );
                 },
-                icon: const Icon(Icons.logout, color: AppColors.error),
-                label: const Text('Keluar dari Akun'),
+                icon: Icon(Icons.logout, color: AppColors.error),
+                label: Text('Keluar dari Akun'),
                 style: OutlinedButton.styleFrom(
                   foregroundColor: AppColors.error,
                   side: const BorderSide(color: AppColors.error),
@@ -151,7 +151,7 @@ class ProfileScreen extends StatelessWidget {
     return Row(
       children: [
         Icon(icon, size: 20, color: AppColors.textSecondary),
-        const SizedBox(width: 12),
+        SizedBox(width: 12),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

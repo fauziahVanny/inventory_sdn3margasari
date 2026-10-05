@@ -18,7 +18,7 @@ class WkDetailBarangScreen extends StatelessWidget {
 
     if (barang == null) {
       return Scaffold(
-        appBar: AppBar(title: const Text('Detail Barang')),
+        appBar: AppBar(title: Text('Detail Barang')),
         body: const Center(child: Text('Barang tidak ditemukan')),
       );
     }
@@ -27,14 +27,14 @@ class WkDetailBarangScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Detail Barang'),
+        title: Text('Detail Barang'),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
+          icon: Icon(Icons.arrow_back),
           onPressed: () => context.go('/wk/barang'),
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.edit_outlined),
+            icon: Icon(Icons.edit_outlined),
             onPressed: () => context.go('/wk/barang/edit/${barang.id}'),
           ),
         ],
@@ -64,7 +64,7 @@ class WkDetailBarangScreen extends StatelessWidget {
                       Expanded(
                         child: Text(
                           barang.namaBarang,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 22,
                             fontWeight: FontWeight.w700,
                             color: Colors.white,
@@ -73,7 +73,7 @@ class WkDetailBarangScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 8),
+                  SizedBox(height: 8),
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                     decoration: BoxDecoration(
@@ -90,18 +90,18 @@ class WkDetailBarangScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16),
                   Row(
                     children: [
                       _statBubble('Jumlah Awal', '${barang.jumlahAwal}'),
-                      const SizedBox(width: 12),
+                      SizedBox(width: 12),
                       _statBubble('Jumlah Sekarang', '${barang.jumlahSekarang}'),
                     ],
                   ),
                 ],
               ),
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: 20),
 
             // Rincian Kondisi
             _buildSection(context, 'Rincian Kondisi', [
@@ -110,7 +110,7 @@ class WkDetailBarangScreen extends StatelessWidget {
               _infoRow(context, 'Rusak Berat', '${barang.jumlahRusakBerat} unit', Icons.error_outline, color: AppColors.error),
               _infoRow(context, 'Hilang', '${barang.jumlahHilang} unit', Icons.help_outline, color: Colors.grey),
             ]),
-            const SizedBox(height: 20),
+            SizedBox(height: 20),
 
             // Detail info
             _buildSection(context, 'Informasi Barang', [
@@ -121,11 +121,11 @@ class WkDetailBarangScreen extends StatelessWidget {
               _infoRow(context, 'Sumber Dana', barang.sumberDana.label, Icons.account_balance_wallet_outlined),
               _infoRow(context, 'Tanggal Perolehan', dateFormat.format(barang.tanggalPerolehan), Icons.calendar_today_outlined),
               if (barang.keteranganTambahan != null && barang.keteranganTambahan!.isNotEmpty) ...[
-                const Divider(height: 24),
+                Divider(height: 24),
                 _infoRow(context, 'Keterangan Tambahan', barang.keteranganTambahan!, Icons.info_outline),
               ],
             ]),
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
             _buildSection(context, 'Informasi Pencatatan', [
               _infoRow(context, 'Dicatat Oleh', barang.namaPencatat ?? '-', Icons.person_outline),
               _infoRow(context, 'Terakhir Diperbarui', dateFormat.format(barang.updatedAt), Icons.update),
@@ -148,7 +148,7 @@ class WkDetailBarangScreen extends StatelessWidget {
           children: [
             Text(
               value,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 28,
                 fontWeight: FontWeight.w700,
                 color: Colors.white,
@@ -172,9 +172,9 @@ class WkDetailBarangScreen extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.surface,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.divider.withValues(alpha: 0.5)),
+        border: Border.all(color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.35)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -183,10 +183,10 @@ class WkDetailBarangScreen extends StatelessWidget {
             title,
             style: Theme.of(context).textTheme.titleSmall?.copyWith(
               fontWeight: FontWeight.w600,
-              color: AppColors.textSecondary,
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
             ),
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
           ...children,
         ],
       ),
@@ -199,7 +199,7 @@ class WkDetailBarangScreen extends StatelessWidget {
       child: Row(
         children: [
           Icon(icon, size: 20, color: color ?? AppColors.textSecondary),
-          const SizedBox(width: 12),
+          SizedBox(width: 12),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

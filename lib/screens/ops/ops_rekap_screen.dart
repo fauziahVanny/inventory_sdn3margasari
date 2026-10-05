@@ -53,7 +53,7 @@ class _OpsRekapScreenState extends State<OpsRekapScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Rekap Data'),
+        title: Text('Rekap Data'),
         actions: [
           IconButton(
             icon: Icon(
@@ -110,7 +110,7 @@ class _OpsRekapScreenState extends State<OpsRekapScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(Icons.search_off, size: 64, color: AppColors.textHint),
-                        const SizedBox(height: 16),
+                        SizedBox(height: 16),
                         Text('Tidak ada data', style: Theme.of(context).textTheme.titleMedium),
                       ],
                     ),
@@ -135,7 +135,7 @@ class _OpsRekapScreenState extends State<OpsRekapScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () => context.go('/ops/rekap/tambah'),
         tooltip: 'Tambah Barang',
-        child: const Icon(Icons.add),
+        child: Icon(Icons.add),
       ),
     );
   }
@@ -178,13 +178,13 @@ class _OpsRekapScreenState extends State<OpsRekapScreen> {
                       prov.resetFilters();
                       Navigator.pop(ctx);
                     },
-                    child: const Text('Reset'),
+                    child: Text('Reset'),
                   ),
                 ],
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: 16),
               Text('Kondisi', style: Theme.of(context).textTheme.titleSmall),
-              const SizedBox(height: 8),
+              SizedBox(height: 8),
               Wrap(
                 spacing: 8,
                 children: KondisiBarang.values.map((k) {
@@ -198,9 +198,9 @@ class _OpsRekapScreenState extends State<OpsRekapScreen> {
                   );
                 }).toList(),
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: 16),
               Text('Kategori', style: Theme.of(context).textTheme.titleSmall),
-              const SizedBox(height: 8),
+              SizedBox(height: 8),
               Wrap(
                 spacing: 8,
                 children: _kategoriList.map((k) {
@@ -226,12 +226,12 @@ class _OpsRekapScreenState extends State<OpsRekapScreen> {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Hapus Barang'),
+        title: Text('Hapus Barang'),
         content: Text('Apakah Anda yakin ingin menghapus "$nama"?'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: const Text('Batal'),
+            child: Text('Batal'),
           ),
           ElevatedButton(
             onPressed: () {
@@ -242,7 +242,7 @@ class _OpsRekapScreenState extends State<OpsRekapScreen> {
               );
             },
             style: ElevatedButton.styleFrom(backgroundColor: AppColors.error),
-            child: const Text('Hapus'),
+            child: Text('Hapus'),
           ),
         ],
       ),

@@ -27,9 +27,9 @@ class LaporanCard extends StatelessWidget {
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
         decoration: BoxDecoration(
-          color: AppColors.surface,
+          color: Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: AppColors.divider.withValues(alpha: 0.5)),
+          border: Border.all(color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.35)),
           boxShadow: [
             BoxShadow(
               color: AppColors.shadow,
@@ -64,7 +64,7 @@ class LaporanCard extends StatelessWidget {
                       size: 24,
                     ),
                   ),
-                  const SizedBox(width: 12),
+                  SizedBox(width: 12),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -77,7 +77,7 @@ class LaporanCard extends StatelessWidget {
                             fontWeight: FontWeight.w600,
                           ),
                         ),
-                        const SizedBox(height: 4),
+                        SizedBox(height: 4),
                         Text(
                           'Diajukan: ${dateFormat.format(laporan.tanggalPengajuan)}',
                           style: Theme.of(context).textTheme.bodySmall,
@@ -90,7 +90,7 @@ class LaporanCard extends StatelessWidget {
               ),
               // Info tambahan
               if (laporan.status == StatusLaporan.disetujui && laporan.tanggalAcc != null) ...[
-                const SizedBox(height: 12),
+                SizedBox(height: 12),
                 Container(
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
@@ -101,7 +101,7 @@ class LaporanCard extends StatelessWidget {
                   child: Row(
                     children: [
                       Icon(Icons.verified, size: 16, color: AppColors.kondisiLayak),
-                      const SizedBox(width: 8),
+                      SizedBox(width: 8),
                       Text(
                         'Disetujui: ${dateFormat.format(laporan.tanggalAcc!)}',
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
@@ -114,7 +114,7 @@ class LaporanCard extends StatelessWidget {
                 ),
               ],
               if (laporan.status == StatusLaporan.revisi && laporan.catatanRevisi != null) ...[
-                const SizedBox(height: 12),
+                SizedBox(height: 12),
                 Container(
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
@@ -126,7 +126,7 @@ class LaporanCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Icon(Icons.info_outline, size: 16, color: AppColors.warning),
-                      const SizedBox(width: 8),
+                      SizedBox(width: 8),
                       Expanded(
                         child: Text(
                           'Catatan: ${laporan.catatanRevisi}',

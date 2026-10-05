@@ -60,10 +60,10 @@ class _WkDashboardScreenState extends State<WkDashboardScreen> {
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Dashboard'),
+            Text('Dashboard'),
             Text(
               user.namaKelas ?? '',
-              style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w400, color: AppColors.textSecondary),
+              style: TextStyle(fontSize: 13, fontWeight: FontWeight.w400, color: AppColors.textSecondary),
             ),
           ],
         ),
@@ -79,7 +79,7 @@ class _WkDashboardScreenState extends State<WkDashboardScreen> {
             ),
           ),
           IconButton(
-            icon: const Icon(Icons.print, color: AppColors.primary),
+            icon: Icon(Icons.print, color: AppColors.primary),
             tooltip: 'Cetak Laporan PDF',
             onPressed: () => PdfHelper.generateAndDownloadWkPdf(context, allBarangKelas, user),
           ),
@@ -123,16 +123,16 @@ class _WkDashboardScreenState extends State<WkDashboardScreen> {
                         color: Colors.white.withValues(alpha: 0.85),
                       ),
                     ),
-                    const SizedBox(height: 4),
+                    SizedBox(height: 4),
                     Text(
                       user.nama,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w700,
                         color: Colors.white,
                       ),
                     ),
-                    const SizedBox(height: 4),
+                    SizedBox(height: 4),
                     Text(
                       'Wali ${user.namaKelas ?? ''} • SDN 3 Margasari',
                       style: TextStyle(
@@ -143,7 +143,7 @@ class _WkDashboardScreenState extends State<WkDashboardScreen> {
                   ],
                 ),
               ),
-              const SizedBox(height: 24),
+              SizedBox(height: 24),
 
               // Statistik
               Text(
@@ -152,7 +152,7 @@ class _WkDashboardScreenState extends State<WkDashboardScreen> {
                   fontWeight: FontWeight.w600,
                 ),
               ),
-              const SizedBox(height: 12),
+              SizedBox(height: 12),
               if (dashboardProv.isLoading)
                 const Center(child: CircularProgressIndicator())
               else
@@ -198,7 +198,7 @@ class _WkDashboardScreenState extends State<WkDashboardScreen> {
                     ),
                   ],
                 ),
-              const SizedBox(height: 24),
+              SizedBox(height: 24),
 
               // Barang terbaru
               Row(
@@ -212,11 +212,11 @@ class _WkDashboardScreenState extends State<WkDashboardScreen> {
                   ),
                   TextButton(
                     onPressed: () => context.go('/wk/barang'),
-                    child: const Text('Lihat Semua'),
+                    child: Text('Lihat Semua'),
                   ),
                 ],
               ),
-              const SizedBox(height: 8),
+              SizedBox(height: 8),
               if (barangProv.isLoading)
                 const Center(child: CircularProgressIndicator())
               else if (allBarangKelas.isEmpty)
@@ -224,14 +224,14 @@ class _WkDashboardScreenState extends State<WkDashboardScreen> {
                   width: double.infinity,
                   padding: const EdgeInsets.all(32),
                   decoration: BoxDecoration(
-                    color: AppColors.surface,
+                    color: Theme.of(context).colorScheme.surface,
                     borderRadius: BorderRadius.circular(16),
-                    border: Border.all(color: AppColors.divider),
+                    border: Border.all(color: Theme.of(context).colorScheme.outline),
                   ),
                   child: Column(
                     children: [
                       Icon(Icons.inventory_2_outlined, size: 48, color: AppColors.textHint),
-                      const SizedBox(height: 12),
+                      SizedBox(height: 12),
                       Text(
                         'Belum ada data barang',
                         style: Theme.of(context).textTheme.bodyMedium,
@@ -254,8 +254,8 @@ class _WkDashboardScreenState extends State<WkDashboardScreen> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => context.go('/wk/barang/tambah'),
-        icon: const Icon(Icons.add),
-        label: const Text('Tambah Barang'),
+        icon: Icon(Icons.add),
+        label: Text('Tambah Barang'),
       ),
     );
   }

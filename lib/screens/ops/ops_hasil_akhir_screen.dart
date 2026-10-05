@@ -53,12 +53,12 @@ class _OpsHasilAkhirScreenState extends State<OpsHasilAkhirScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Laporan Hasil Akhir'),
+        title: Text('Laporan Hasil Akhir'),
         centerTitle: false,
         actions: [
           IconButton(
             tooltip: 'Refresh',
-            icon: const Icon(Icons.refresh_rounded),
+            icon: Icon(Icons.refresh_rounded),
             onPressed: () => context.read<LaporanProvider>().fetchLaporan(),
           ),
         ],
@@ -104,27 +104,27 @@ class _OpsHasilAkhirScreenState extends State<OpsHasilAkhirScreen> {
             children: [
               Icon(Icons.cloud_off_rounded,
                   size: 64, color: AppColors.error.withValues(alpha: 0.5)),
-              const SizedBox(height: 16),
-              const Text(
+              SizedBox(height: 16),
+              Text(
                 'Gagal Memuat Data',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
-                  color: AppColors.textPrimary,
+                  color: Theme.of(context).colorScheme.onSurface,
                 ),
               ),
-              const SizedBox(height: 8),
+              SizedBox(height: 8),
               Text(
                 prov.errorMessage!,
                 textAlign: TextAlign.center,
-                style: const TextStyle(
-                    color: AppColors.textSecondary, fontSize: 13),
+                style: TextStyle(
+                    color: Theme.of(context).colorScheme.onSurfaceVariant, fontSize: 13),
               ),
-              const SizedBox(height: 24),
+              SizedBox(height: 24),
               FilledButton.icon(
                 onPressed: () => context.read<LaporanProvider>().fetchLaporan(),
-                icon: const Icon(Icons.refresh),
-                label: const Text('Coba Lagi'),
+                icon: Icon(Icons.refresh),
+                label: Text('Coba Lagi'),
               ),
             ],
           ),
@@ -152,27 +152,27 @@ class _OpsHasilAkhirScreenState extends State<OpsHasilAkhirScreen> {
                         color: AppColors.kondisiLayak.withValues(alpha: 0.1),
                         shape: BoxShape.circle,
                       ),
-                      child: const Icon(
+                      child: Icon(
                         Icons.workspace_premium_rounded,
                         size: 48,
                         color: AppColors.kondisiLayak,
                       ),
                     ),
-                    const SizedBox(height: 20),
-                    const Text(
+                    SizedBox(height: 20),
+                    Text(
                       'Belum Ada Laporan Final',
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
-                        color: AppColors.textPrimary,
+                        color: Theme.of(context).colorScheme.onSurface,
                       ),
                     ),
-                    const SizedBox(height: 8),
-                    const Text(
+                    SizedBox(height: 8),
+                    Text(
                       'Laporan yang telah disetujui (ACC) oleh\nKepala Sekolah akan tampil di sini.',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                          color: AppColors.textSecondary, fontSize: 13),
+                          color: Theme.of(context).colorScheme.onSurfaceVariant, fontSize: 13),
                     ),
                   ],
                 ),
@@ -196,7 +196,7 @@ class _OpsHasilAkhirScreenState extends State<OpsHasilAkhirScreen> {
     return ListView.separated(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       itemCount: list.length,
-      separatorBuilder: (_, _) => const SizedBox(height: 10),
+      separatorBuilder: (_, _) => SizedBox(height: 10),
       itemBuilder: (_, i) => _HasilAkhirCard(
         laporan: list[i],
         isPdfLoading: _isPdfLoading,
@@ -229,10 +229,10 @@ class _OpsHasilAkhirScreenState extends State<OpsHasilAkhirScreen> {
                   color: AppColors.kondisiLayak.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: const Icon(Icons.workspace_premium_rounded,
+                child: Icon(Icons.workspace_premium_rounded,
                     color: AppColors.kondisiLayak, size: 24),
               ),
-              const SizedBox(width: 14),
+              SizedBox(width: 14),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -265,12 +265,12 @@ class _OpsHasilAkhirScreenState extends State<OpsHasilAkhirScreen> {
                 ),
                 child: Row(
                   children: [
-                    const Icon(Icons.verified_rounded,
+                    Icon(Icons.verified_rounded,
                         size: 14, color: AppColors.kondisiLayak),
-                    const SizedBox(width: 6),
+                    SizedBox(width: 6),
                     Text(
                       '${list.length} laporan final',
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 12,
                         color: AppColors.kondisiLayak,
                         fontWeight: FontWeight.w600,
@@ -281,15 +281,15 @@ class _OpsHasilAkhirScreenState extends State<OpsHasilAkhirScreen> {
               ),
             ],
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: 20),
 
           // ── Tabel ──
           Container(
             width: double.infinity,
             decoration: BoxDecoration(
-              color: AppColors.surface,
+              color: Theme.of(context).colorScheme.surface,
               borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: AppColors.divider),
+              border: Border.all(color: Theme.of(context).colorScheme.outline),
               boxShadow: [
                 BoxShadow(
                   color: AppColors.shadow,
@@ -305,14 +305,14 @@ class _OpsHasilAkhirScreenState extends State<OpsHasilAkhirScreen> {
                 child: DataTable(
                   headingRowColor:
                       WidgetStateProperty.all(AppColors.background),
-                  headingTextStyle: const TextStyle(
+                  headingTextStyle: TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: 13,
-                    color: AppColors.textSecondary,
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
                   ),
-                  dataTextStyle: const TextStyle(
+                  dataTextStyle: TextStyle(
                     fontSize: 13,
-                    color: AppColors.textPrimary,
+                    color: Theme.of(context).colorScheme.onSurface,
                   ),
                   dividerThickness: 1,
                   columnSpacing: 24,
@@ -352,7 +352,7 @@ class _OpsHasilAkhirScreenState extends State<OpsHasilAkhirScreen> {
                                 judulLaporan,
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 2,
-                                style: const TextStyle(
+                                style: TextStyle(
                                   color: AppColors.primary,
                                   fontWeight: FontWeight.w500,
                                 ),
@@ -371,7 +371,7 @@ class _OpsHasilAkhirScreenState extends State<OpsHasilAkhirScreen> {
                               Tooltip(
                                 message: 'Lihat Detail',
                                 child: IconButton(
-                                  icon: const Icon(
+                                  icon: Icon(
                                       Icons.open_in_new_rounded,
                                       size: 18),
                                   color: AppColors.primary,
@@ -379,19 +379,19 @@ class _OpsHasilAkhirScreenState extends State<OpsHasilAkhirScreen> {
                                       '/ops/laporan/detail/${lap.id}'),
                                 ),
                               ),
-                              const SizedBox(width: 4),
+                              SizedBox(width: 4),
                               // Tombol PDF
                               Tooltip(
                                 message: 'Unduh PDF',
                                 child: IconButton(
                                   icon: _isPdfLoading
-                                      ? const SizedBox(
+                                      ? SizedBox(
                                           width: 18,
                                           height: 18,
                                           child: CircularProgressIndicator(
                                               strokeWidth: 2),
                                         )
-                                      : const Icon(
+                                      : Icon(
                                           Icons.picture_as_pdf_rounded,
                                           size: 18),
                                   color: AppColors.error,
@@ -745,7 +745,7 @@ class _HasilAkhirCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(14),
         child: Container(
           decoration: BoxDecoration(
-            color: AppColors.surface,
+            color: Theme.of(context).colorScheme.surface,
             borderRadius: BorderRadius.circular(14),
             border: Border.all(
                 color: AppColors.kondisiLayak.withValues(alpha: 0.3)),
@@ -774,39 +774,39 @@ class _HasilAkhirCard extends StatelessWidget {
                             .withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: const Icon(
+                      child: Icon(
                         Icons.description_rounded,
                         size: 20,
                         color: AppColors.kondisiLayak,
                       ),
                     ),
-                    const SizedBox(width: 12),
+                    SizedBox(width: 12),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             judulLaporan,
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.w600,
-                              color: AppColors.textPrimary,
+                              color: Theme.of(context).colorScheme.onSurface,
                             ),
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                           ),
-                          const SizedBox(height: 4),
+                          SizedBox(height: 4),
                           Text(
                             laporan.jenis.label,
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 12,
-                              color: AppColors.textSecondary,
+                              color: Theme.of(context).colorScheme.onSurfaceVariant,
                             ),
                           ),
                         ],
                       ),
                     ),
-                    const SizedBox(width: 8),
+                    SizedBox(width: 8),
                     // Badge ACC
                     Container(
                       padding: const EdgeInsets.symmetric(
@@ -819,7 +819,7 @@ class _HasilAkhirCard extends StatelessWidget {
                             color: AppColors.kondisiLayak
                                 .withValues(alpha: 0.3)),
                       ),
-                      child: const Row(
+                      child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Icon(Icons.verified_rounded,
@@ -839,40 +839,40 @@ class _HasilAkhirCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: 12),
-                const Divider(
-                    height: 1, thickness: 1, color: AppColors.divider),
-                const SizedBox(height: 12),
+                SizedBox(height: 12),
+                Divider(
+                    height: 1, thickness: 1, color: Theme.of(context).colorScheme.outline),
+                SizedBox(height: 12),
 
                 // ── Info baris ──
                 Row(
                   children: [
-                    const Icon(Icons.person_outline_rounded,
+                    Icon(Icons.person_outline_rounded,
                         size: 14, color: AppColors.textSecondary),
-                    const SizedBox(width: 6),
+                    SizedBox(width: 6),
                     Expanded(
                       child: Text(
                         'Oleh: ${laporan.namaPengaju ?? '-'}',
-                        style: const TextStyle(
+                        style: TextStyle(
                             fontSize: 12, color: AppColors.textSecondary),
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
-                    const SizedBox(width: 12),
-                    const Icon(Icons.calendar_today_rounded,
+                    SizedBox(width: 12),
+                    Icon(Icons.calendar_today_rounded,
                         size: 12, color: AppColors.textSecondary),
-                    const SizedBox(width: 4),
+                    SizedBox(width: 4),
                     Text(
                       tglAcc,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 12,
-                        color: AppColors.textSecondary,
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
                         fontStyle: FontStyle.italic,
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 14),
+                SizedBox(height: 14),
 
                 // ── Tombol aksi ──
                 Row(
@@ -881,31 +881,31 @@ class _HasilAkhirCard extends StatelessWidget {
                     Expanded(
                       child: OutlinedButton.icon(
                         onPressed: onTapDetail,
-                        icon: const Icon(Icons.open_in_new_rounded,
+                        icon: Icon(Icons.open_in_new_rounded,
                             size: 16),
-                        label: const Text('Lihat Detail'),
+                        label: Text('Lihat Detail'),
                         style: OutlinedButton.styleFrom(
                           foregroundColor: AppColors.primary,
                           side: const BorderSide(color: AppColors.primary),
                           padding: const EdgeInsets.symmetric(vertical: 10),
-                          textStyle: const TextStyle(fontSize: 13),
+                          textStyle: TextStyle(fontSize: 13),
                         ),
                       ),
                     ),
-                    const SizedBox(width: 10),
+                    SizedBox(width: 10),
                     // Unduh PDF
                     Expanded(
                       child: ElevatedButton.icon(
                         onPressed: isPdfLoading ? null : onTapPdf,
                         icon: isPdfLoading
-                            ? const SizedBox(
+                            ? SizedBox(
                                 width: 16,
                                 height: 16,
                                 child: CircularProgressIndicator(
                                     strokeWidth: 2,
                                     color: Colors.white),
                               )
-                            : const Icon(Icons.picture_as_pdf_rounded,
+                            : Icon(Icons.picture_as_pdf_rounded,
                                 size: 16),
                         label: Text(
                             isPdfLoading ? 'Menyiapkan...' : 'Unduh PDF'),
@@ -913,7 +913,7 @@ class _HasilAkhirCard extends StatelessWidget {
                           backgroundColor: AppColors.error,
                           foregroundColor: Colors.white,
                           padding: const EdgeInsets.symmetric(vertical: 10),
-                          textStyle: const TextStyle(fontSize: 13),
+                          textStyle: TextStyle(fontSize: 13),
                         ),
                       ),
                     ),

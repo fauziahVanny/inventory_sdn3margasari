@@ -54,7 +54,7 @@ class _OpsMasterKategoriScreenState extends State<OpsMasterKategoriScreen> {
                 controller: namaCtrl,
                 decoration: _inputDeco('Contoh: Furniture'),
               ),
-              const SizedBox(height: 14),
+              SizedBox(height: 14),
               _fieldLabel('Kode Kategori (2-3 huruf)'),
               TextField(
                 controller: kodeCtrl,
@@ -62,7 +62,7 @@ class _OpsMasterKategoriScreenState extends State<OpsMasterKategoriScreen> {
                 maxLength: 4,
                 decoration: _inputDeco('Contoh: FR'),
               ),
-              const SizedBox(height: 14),
+              SizedBox(height: 14),
               _fieldLabel('Deskripsi (Opsional)'),
               TextField(
                 controller: deskCtrl,
@@ -73,7 +73,7 @@ class _OpsMasterKategoriScreenState extends State<OpsMasterKategoriScreen> {
           ),
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Batal')),
+          TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text('Batal')),
           ElevatedButton(
             onPressed: () async {
               if (namaCtrl.text.trim().isEmpty || kodeCtrl.text.trim().isEmpty) return;
@@ -126,33 +126,33 @@ class _OpsMasterKategoriScreenState extends State<OpsMasterKategoriScreen> {
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
-        title: const Text('Kategori Barang'),
+        title: Text('Kategori Barang'),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
+          icon: Icon(Icons.arrow_back),
           onPressed: () => context.go('/ops/master'),
         ),
         actions: [
-          IconButton(icon: const Icon(Icons.refresh), onPressed: _loadData),
+          IconButton(icon: Icon(Icons.refresh), onPressed: _loadData),
         ],
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => _showFormDialog(),
-        icon: const Icon(Icons.add),
-        label: const Text('Tambah'),
+        icon: Icon(Icons.add),
+        label: Text('Tambah'),
       ),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
           : _list.isEmpty
-              ? _emptyState('Belum ada kategori', Icons.category_outlined)
+              ? _emptyState(context, 'Belum ada kategori', Icons.category_outlined)
               : RefreshIndicator(
                   onRefresh: _loadData,
                   child: ListView.separated(
                     padding: const EdgeInsets.fromLTRB(16, 16, 16, 100),
                     itemCount: _list.length,
-                    separatorBuilder: (_, __) => const SizedBox(height: 8),
+                    separatorBuilder: (_, __) => SizedBox(height: 8),
                     itemBuilder: (ctx, i) {
                       final item = _list[i] as Map<String, dynamic>;
-                      return _itemCard(
+                      return _itemCard(context: context,
                         leading: _kodeBadge(item['kode_kategori'] ?? '?', const Color(0xFF1565C0)),
                         title: item['nama_kategori'] ?? '-',
                         subtitle: item['deskripsi'] ?? 'Tidak ada deskripsi',
@@ -213,7 +213,7 @@ class _OpsMasterRuanganScreenState extends State<OpsMasterRuanganScreen> {
             children: [
               _fieldLabel('Nama Ruangan'),
               TextField(controller: namaCtrl, decoration: _inputDeco('Contoh: Kelas')),
-              const SizedBox(height: 14),
+              SizedBox(height: 14),
               _fieldLabel('Kode Ruangan (2-4 huruf)'),
               TextField(
                 controller: kodeCtrl,
@@ -221,14 +221,14 @@ class _OpsMasterRuanganScreenState extends State<OpsMasterRuanganScreen> {
                 maxLength: 4,
                 decoration: _inputDeco('Contoh: KE'),
               ),
-              const SizedBox(height: 14),
+              SizedBox(height: 14),
               _fieldLabel('Deskripsi (Opsional)'),
               TextField(controller: deskCtrl, maxLines: 2, decoration: _inputDeco('Keterangan...')),
             ],
           ),
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Batal')),
+          TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text('Batal')),
           ElevatedButton(
             onPressed: () async {
               if (namaCtrl.text.trim().isEmpty || kodeCtrl.text.trim().isEmpty) return;
@@ -279,34 +279,34 @@ class _OpsMasterRuanganScreenState extends State<OpsMasterRuanganScreen> {
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
-        title: const Text('Ruangan'),
+        title: Text('Ruangan'),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
+          icon: Icon(Icons.arrow_back),
           onPressed: () => context.go('/ops/master'),
         ),
         actions: [
-          IconButton(icon: const Icon(Icons.refresh), onPressed: _loadData),
+          IconButton(icon: Icon(Icons.refresh), onPressed: _loadData),
         ],
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => _showFormDialog(),
-        icon: const Icon(Icons.add),
-        label: const Text('Tambah'),
+        icon: Icon(Icons.add),
+        label: Text('Tambah'),
         backgroundColor: const Color(0xFF00897B),
       ),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
           : _list.isEmpty
-              ? _emptyState('Belum ada ruangan', Icons.meeting_room_outlined)
+              ? _emptyState(context, 'Belum ada ruangan', Icons.meeting_room_outlined)
               : RefreshIndicator(
                   onRefresh: _loadData,
                   child: ListView.separated(
                     padding: const EdgeInsets.fromLTRB(16, 16, 16, 100),
                     itemCount: _list.length,
-                    separatorBuilder: (_, __) => const SizedBox(height: 8),
+                    separatorBuilder: (_, __) => SizedBox(height: 8),
                     itemBuilder: (ctx, i) {
                       final item = _list[i] as Map<String, dynamic>;
-                      return _itemCard(
+                      return _itemCard(context: context,
                         leading: _kodeBadge(item['kode_ruangan'] ?? '?', const Color(0xFF00897B)),
                         title: item['nama_ruangan'] ?? '-',
                         subtitle: item['deskripsi'] ?? 'Tidak ada deskripsi',
@@ -382,7 +382,7 @@ class _OpsMasterKelasScreenState extends State<OpsMasterKelasScreen> {
                   controller: namaCtrl,
                   decoration: _inputDeco('Contoh: Kelas 1'),
                 ),
-                const SizedBox(height: 14),
+                SizedBox(height: 14),
                 _fieldLabel('Wali Kelas (Opsional)'),
                 DropdownButtonFormField<String>(
                   value: selectedWaliId,
@@ -401,7 +401,7 @@ class _OpsMasterKelasScreenState extends State<OpsMasterKelasScreen> {
             ),
           ),
           actions: [
-            TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Batal')),
+            TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text('Batal')),
             ElevatedButton(
               onPressed: () async {
                 if (namaCtrl.text.trim().isEmpty) return;
@@ -452,35 +452,35 @@ class _OpsMasterKelasScreenState extends State<OpsMasterKelasScreen> {
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
-        title: const Text('Kelas'),
+        title: Text('Kelas'),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
+          icon: Icon(Icons.arrow_back),
           onPressed: () => context.go('/ops/master'),
         ),
         actions: [
-          IconButton(icon: const Icon(Icons.refresh), onPressed: _loadData),
+          IconButton(icon: Icon(Icons.refresh), onPressed: _loadData),
         ],
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => _showFormDialog(),
-        icon: const Icon(Icons.add),
-        label: const Text('Tambah'),
+        icon: Icon(Icons.add),
+        label: Text('Tambah'),
         backgroundColor: const Color(0xFFE65100),
       ),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
           : _list.isEmpty
-              ? _emptyState('Belum ada kelas', Icons.class_outlined)
+              ? _emptyState(context, 'Belum ada kelas', Icons.class_outlined)
               : RefreshIndicator(
                   onRefresh: _loadData,
                   child: ListView.separated(
                     padding: const EdgeInsets.fromLTRB(16, 16, 16, 100),
                     itemCount: _list.length,
-                    separatorBuilder: (_, __) => const SizedBox(height: 8),
+                    separatorBuilder: (_, __) => SizedBox(height: 8),
                     itemBuilder: (ctx, i) {
                       final item = _list[i] as Map<String, dynamic>;
                       final waliNama = item['wali_kelas_nama'] as String? ?? 'Belum ada wali kelas';
-                      return _itemCard(
+                      return _itemCard(context: context,
                         leading: _kodeBadge(
                           (item['nama_kelas'] as String? ?? '?').replaceAll('Kelas ', ''),
                           const Color(0xFFE65100),
@@ -565,24 +565,24 @@ class _OpsMasterPenggunaScreenState extends State<OpsMasterPenggunaScreen> {
               children: [
                 _fieldLabel('Nama Lengkap'),
                 TextField(controller: namaCtrl, decoration: _inputDeco('Nama beserta gelar')),
-                const SizedBox(height: 12),
+                SizedBox(height: 12),
                 _fieldLabel('NIP'),
                 TextField(
                   controller: nipCtrl,
                   keyboardType: TextInputType.number,
                   decoration: _inputDeco('Nomor Induk Pegawai'),
                 ),
-                const SizedBox(height: 12),
+                SizedBox(height: 12),
                 _fieldLabel('Username'),
                 TextField(controller: usernameCtrl, decoration: _inputDeco('Username login')),
-                const SizedBox(height: 12),
+                SizedBox(height: 12),
                 _fieldLabel(isEdit ? 'Password Baru (kosongkan jika tidak diubah)' : 'Password'),
                 TextField(
                   controller: passCtrl,
                   obscureText: true,
                   decoration: _inputDeco('Min. 6 karakter'),
                 ),
-                const SizedBox(height: 12),
+                SizedBox(height: 12),
                 _fieldLabel('Role'),
                 DropdownButtonFormField<String>(
                   value: selectedRole,
@@ -598,7 +598,7 @@ class _OpsMasterPenggunaScreenState extends State<OpsMasterPenggunaScreen> {
             ),
           ),
           actions: [
-            TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Batal')),
+            TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text('Batal')),
             ElevatedButton(
               onPressed: () async {
                 if (namaCtrl.text.trim().isEmpty || usernameCtrl.text.trim().isEmpty) return;
@@ -654,31 +654,31 @@ class _OpsMasterPenggunaScreenState extends State<OpsMasterPenggunaScreen> {
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
-        title: const Text('Pengguna'),
+        title: Text('Pengguna'),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
+          icon: Icon(Icons.arrow_back),
           onPressed: () => context.go('/ops/master'),
         ),
         actions: [
-          IconButton(icon: const Icon(Icons.refresh), onPressed: _loadData),
+          IconButton(icon: Icon(Icons.refresh), onPressed: _loadData),
         ],
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => _showFormDialog(),
-        icon: const Icon(Icons.person_add),
-        label: const Text('Tambah'),
+        icon: Icon(Icons.person_add),
+        label: Text('Tambah'),
         backgroundColor: const Color(0xFF6A1B9A),
       ),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
           : _list.isEmpty
-              ? _emptyState('Belum ada pengguna', Icons.people_outline)
+              ? _emptyState(context, 'Belum ada pengguna', Icons.people_outline)
               : RefreshIndicator(
                   onRefresh: _loadData,
                   child: ListView.separated(
                     padding: const EdgeInsets.fromLTRB(16, 16, 16, 100),
                     itemCount: _list.length,
-                    separatorBuilder: (_, __) => const SizedBox(height: 8),
+                    separatorBuilder: (_, __) => SizedBox(height: 8),
                     itemBuilder: (ctx, i) {
                       final item = _list[i] as Map<String, dynamic>;
                       final role = item['role'] as String? ?? '';
@@ -688,9 +688,9 @@ class _OpsMasterPenggunaScreenState extends State<OpsMasterPenggunaScreen> {
                       return Container(
                         padding: const EdgeInsets.all(14),
                         decoration: BoxDecoration(
-                          color: AppColors.surface,
+                          color: Theme.of(context).colorScheme.surface,
                           borderRadius: BorderRadius.circular(14),
-                          border: Border.all(color: AppColors.divider.withValues(alpha: 0.5)),
+                          border: Border.all(color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.35)),
                         ),
                         child: Row(
                           children: [
@@ -714,29 +714,29 @@ class _OpsMasterPenggunaScreenState extends State<OpsMasterPenggunaScreen> {
                                 ),
                               ),
                             ),
-                            const SizedBox(width: 12),
+                            SizedBox(width: 12),
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
                                     item['nama'] ?? '-',
-                                    style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+                                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                   ),
-                                  const SizedBox(height: 2),
+                                  SizedBox(height: 2),
                                   Text(
                                     '@${item['username']} • ${item['nip'] ?? '-'}',
-                                    style: const TextStyle(fontSize: 12, color: AppColors.textSecondary),
+                                    style: TextStyle(fontSize: 12, color: AppColors.textSecondary),
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                   ),
-                                  const SizedBox(height: 5),
+                                  SizedBox(height: 5),
                                   Row(
                                     children: [
                                       Icon(icon, size: 12, color: color),
-                                      const SizedBox(width: 4),
+                                      SizedBox(width: 4),
                                       Text(
                                         roleLabel,
                                         style: TextStyle(
@@ -751,7 +751,7 @@ class _OpsMasterPenggunaScreenState extends State<OpsMasterPenggunaScreen> {
                               ),
                             ),
                             PopupMenuButton<String>(
-                              icon: const Icon(Icons.more_vert, color: AppColors.textSecondary),
+                              icon: Icon(Icons.more_vert, color: AppColors.textSecondary),
                               onSelected: (v) {
                                 if (v == 'edit') _showFormDialog(item: item);
                                 if (v == 'delete') _delete(item['id'], item['nama']);
@@ -760,7 +760,7 @@ class _OpsMasterPenggunaScreenState extends State<OpsMasterPenggunaScreen> {
                                 const PopupMenuItem(value: 'edit', child: Row(children: [Icon(Icons.edit, size: 16), SizedBox(width: 8), Text('Edit')])),
                                 PopupMenuItem(
                                   value: 'delete',
-                                  child: const Row(children: [Icon(Icons.delete_outline, size: 16, color: Colors.red), SizedBox(width: 8), Text('Hapus', style: TextStyle(color: Colors.red))]),
+                                  child: Row(children: [Icon(Icons.delete_outline, size: 16, color: Colors.red), SizedBox(width: 8), Text('Hapus', style: TextStyle(color: Colors.red))]),
                                 ),
                               ],
                             ),
@@ -778,7 +778,7 @@ class _OpsMasterPenggunaScreenState extends State<OpsMasterPenggunaScreen> {
 
 Widget _fieldLabel(String text) => Padding(
       padding: const EdgeInsets.only(bottom: 6),
-      child: Text(text, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: AppColors.textPrimary)),
+      child: Text(text, style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: AppColors.textPrimary)),
     );
 
 InputDecoration _inputDeco(String hint) => InputDecoration(
@@ -804,6 +804,7 @@ Widget _kodeBadge(String text, Color color, {double fontSize = 14}) => Container
     );
 
 Widget _itemCard({
+  required BuildContext context,
   required Widget leading,
   required String title,
   required String subtitle,
@@ -813,29 +814,29 @@ Widget _itemCard({
     Container(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
       decoration: BoxDecoration(
-        color: AppColors.surface,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: AppColors.divider.withValues(alpha: 0.5)),
+        border: Border.all(color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.35)),
       ),
       child: Row(
         children: [
           leading,
-          const SizedBox(width: 14),
+          SizedBox(width: 14),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(title, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14)),
-                const SizedBox(height: 3),
+                Text(title, style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14)),
+                SizedBox(height: 3),
                 Text(subtitle,
-                    style: const TextStyle(fontSize: 12, color: AppColors.textSecondary),
+                    style: TextStyle(fontSize: 12, color: AppColors.textSecondary),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis),
               ],
             ),
           ),
           PopupMenuButton<String>(
-            icon: const Icon(Icons.more_vert, color: AppColors.textSecondary),
+            icon: Icon(Icons.more_vert, color: AppColors.textSecondary),
             onSelected: (v) {
               if (v == 'edit') onEdit();
               if (v == 'delete') onDelete();
@@ -852,15 +853,15 @@ Widget _itemCard({
       ),
     );
 
-Widget _emptyState(String message, IconData icon) => Center(
+Widget _emptyState(BuildContext context, String message, IconData icon) => Center(
       child: Padding(
         padding: const EdgeInsets.all(48),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(icon, size: 64, color: AppColors.textHint),
-            const SizedBox(height: 16),
-            Text(message, style: const TextStyle(color: AppColors.textSecondary, fontSize: 15)),
+            SizedBox(height: 16),
+            Text(message, style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant, fontSize: 15)),
           ],
         ),
       ),
@@ -870,14 +871,14 @@ Future<bool> _confirmDelete(BuildContext context, String nama) async {
   return await showDialog<bool>(
         context: context,
         builder: (ctx) => AlertDialog(
-          title: const Text('Hapus Data'),
+          title: Text('Hapus Data'),
           content: Text('Apakah Anda yakin ingin menghapus "$nama"?'),
           actions: [
-            TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Batal')),
+            TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text('Batal')),
             ElevatedButton(
               onPressed: () => Navigator.pop(ctx, true),
               style: ElevatedButton.styleFrom(backgroundColor: AppColors.error),
-              child: const Text('Hapus'),
+              child: Text('Hapus'),
             ),
           ],
         ),

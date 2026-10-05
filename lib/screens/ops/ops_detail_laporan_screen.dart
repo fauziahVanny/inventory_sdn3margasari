@@ -51,7 +51,7 @@ class _OpsDetailLaporanScreenState extends State<OpsDetailLaporanScreen> {
 
     if (laporan == null) {
       return Scaffold(
-        appBar: AppBar(title: const Text('Detail Laporan')),
+        appBar: AppBar(title: Text('Detail Laporan')),
         body: const Center(child: Text('Laporan tidak ditemukan')),
       );
     }
@@ -67,14 +67,14 @@ class _OpsDetailLaporanScreenState extends State<OpsDetailLaporanScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Detail Laporan'),
+        title: Text('Detail Laporan'),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
+          icon: Icon(Icons.arrow_back),
           onPressed: () => context.go('/ops/laporan'),
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.picture_as_pdf),
+            icon: Icon(Icons.picture_as_pdf),
             onPressed: () => _generateAndDownloadPdf(context, laporan, namaKelas ?? 'Sekolah', namaPengaju, barangList),
           ),
         ],
@@ -89,9 +89,9 @@ class _OpsDetailLaporanScreenState extends State<OpsDetailLaporanScreen> {
               width: double.infinity,
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: AppColors.surface,
+                color: Theme.of(context).colorScheme.surface,
                 borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: AppColors.divider),
+                border: Border.all(color: Theme.of(context).colorScheme.outline),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -109,7 +109,7 @@ class _OpsDetailLaporanScreenState extends State<OpsDetailLaporanScreen> {
                       StatusBadge(status: laporan.status),
                     ],
                   ),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16),
                   _infoRow(context, 'Diajukan oleh', namaPengaju ?? '-'),
                   _infoRow(context, 'Tanggal Pengajuan', dateFormat.format(laporan.tanggalPengajuan)),
                   _infoRow(context, 'Jenis', laporan.jenis.label),
@@ -119,7 +119,7 @@ class _OpsDetailLaporanScreenState extends State<OpsDetailLaporanScreen> {
                 ],
               ),
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
 
             if (laporan.catatanRevisi != null && laporan.catatanRevisi!.isNotEmpty)
               Container(
@@ -136,15 +136,15 @@ class _OpsDetailLaporanScreenState extends State<OpsDetailLaporanScreen> {
                   children: [
                     Row(
                       children: [
-                        const Icon(Icons.info_outline, color: AppColors.warning, size: 18),
-                        const SizedBox(width: 8),
-                        const Text(
+                        Icon(Icons.info_outline, color: AppColors.warning, size: 18),
+                        SizedBox(width: 8),
+                        Text(
                           'Catatan Revisi',
                           style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.warning),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 8),
+                    SizedBox(height: 8),
                     Text(laporan.catatanRevisi!, style: Theme.of(context).textTheme.bodyMedium),
                   ],
                 ),
@@ -155,9 +155,9 @@ class _OpsDetailLaporanScreenState extends State<OpsDetailLaporanScreen> {
               'Daftar Barang',
               style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: 8),
             ...barangList.map((b) => BarangCard(barang: b, showActions: false)),
-            const SizedBox(height: 24),
+            SizedBox(height: 24),
 
             // Tombol Aksi
             if (laporan.status == StatusLaporan.draft || laporan.status == StatusLaporan.revisi)
@@ -176,15 +176,15 @@ class _OpsDetailLaporanScreenState extends State<OpsDetailLaporanScreen> {
                       }
                     }
                   },
-                  icon: const Icon(Icons.send),
-                  label: const Text('Ajukan ke Kepala Sekolah'),
+                  icon: Icon(Icons.send),
+                  label: Text('Ajukan ke Kepala Sekolah'),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primary,
                     foregroundColor: Colors.white,
                   ),
                 ),
               ),
-              const SizedBox(height: 12),
+              SizedBox(height: 12),
               SizedBox(
                 width: double.infinity,
                 height: 52,
@@ -193,13 +193,13 @@ class _OpsDetailLaporanScreenState extends State<OpsDetailLaporanScreen> {
                     final confirm = await showDialog<bool>(
                       context: context,
                       builder: (ctx) => AlertDialog(
-                        title: const Text('Hapus Laporan'),
-                        content: const Text('Apakah Anda yakin ingin menghapus laporan ini? Data yang sudah dihapus tidak dapat dikembalikan.'),
+                        title: Text('Hapus Laporan'),
+                        content: Text('Apakah Anda yakin ingin menghapus laporan ini? Data yang sudah dihapus tidak dapat dikembalikan.'),
                         actions: [
-                          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Batal')),
+                          TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text('Batal')),
                           TextButton(
                             onPressed: () => Navigator.pop(ctx, true),
-                            child: const Text('Hapus', style: TextStyle(color: Colors.red)),
+                            child: Text('Hapus', style: TextStyle(color: Colors.red)),
                           ),
                         ],
                       ),
@@ -217,24 +217,24 @@ class _OpsDetailLaporanScreenState extends State<OpsDetailLaporanScreen> {
                       }
                     }
                   },
-                  icon: const Icon(Icons.delete_outline, color: Colors.red),
-                  label: const Text('Hapus Laporan', style: TextStyle(color: Colors.red)),
+                  icon: Icon(Icons.delete_outline, color: Colors.red),
+                  label: Text('Hapus Laporan', style: TextStyle(color: Colors.red)),
                   style: OutlinedButton.styleFrom(
                     side: const BorderSide(color: Colors.red),
                   ),
                 ),
               ),
-              const SizedBox(height: 12),
+              SizedBox(height: 12),
             SizedBox(
               width: double.infinity,
               height: 52,
               child: OutlinedButton.icon(
                 onPressed: () => _generateAndDownloadPdf(context, laporan, namaKelas ?? 'Sekolah', namaPengaju, barangList),
-                icon: const Icon(Icons.picture_as_pdf),
-                label: const Text('Cetak Dokumen PDF'),
+                icon: Icon(Icons.picture_as_pdf),
+                label: Text('Cetak Dokumen PDF'),
               ),
             ),
-            const SizedBox(height: 24),
+            SizedBox(height: 24),
           ],
         ),
       ),

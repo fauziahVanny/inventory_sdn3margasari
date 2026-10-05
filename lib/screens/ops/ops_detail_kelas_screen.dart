@@ -51,7 +51,7 @@ class _OpsDetailKelasScreenState extends State<OpsDetailKelasScreen> {
       appBar: AppBar(
         title: Text(kelasNama),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
+          icon: Icon(Icons.arrow_back),
           onPressed: () => context.go('/ops/dashboard'),
         ),
       ),
@@ -80,17 +80,17 @@ class _OpsDetailKelasScreenState extends State<OpsDetailKelasScreen> {
                         color: AppColors.primary.withValues(alpha: 0.1),
                         shape: BoxShape.circle,
                       ),
-                      child: const Icon(Icons.person, color: AppColors.primary),
+                      child: Icon(Icons.person, color: AppColors.primary),
                     ),
-                    const SizedBox(width: 12),
+                    SizedBox(width: 12),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text('Wali Kelas', style: TextStyle(fontSize: 12, color: AppColors.textSecondary)),
+                          Text('Wali Kelas', style: TextStyle(fontSize: 12, color: AppColors.textSecondary)),
                           Text(
                             waliNama,
-                            style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
+                            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15, color: Theme.of(context).colorScheme.onSurface),
                           ),
                         ],
                       ),
@@ -98,7 +98,7 @@ class _OpsDetailKelasScreenState extends State<OpsDetailKelasScreen> {
                   ],
                 ),
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: 16),
 
               // Stats
               if (dashboardProv.isLoading)
@@ -146,14 +146,14 @@ class _OpsDetailKelasScreenState extends State<OpsDetailKelasScreen> {
                     ),
                   ],
                 ),
-              const SizedBox(height: 24),
+              SizedBox(height: 24),
 
               // Barang list
               Text(
                 'Daftar Barang',
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
               ),
-              const SizedBox(height: 8),
+              SizedBox(height: 8),
               if (barangProv.isLoading)
                 const Center(child: CircularProgressIndicator())
               else if (barangList.isEmpty)

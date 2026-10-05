@@ -56,7 +56,7 @@ class AppDrawer extends StatelessWidget {
                   child: Center(
                     child: Text(
                       user.nama.isNotEmpty ? user.nama[0].toUpperCase() : '?',
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.w700,
                         color: Colors.white,
@@ -64,10 +64,10 @@ class AppDrawer extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: 16),
                 Text(
                   user.nama,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
                     color: Colors.white,
@@ -75,7 +75,7 @@ class AppDrawer extends StatelessWidget {
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
-                const SizedBox(height: 4),
+                SizedBox(height: 4),
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                   decoration: BoxDecoration(
@@ -96,7 +96,7 @@ class AppDrawer extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: 8),
           // Menu items berdasarkan role
           Expanded(
             child: ListView(
@@ -105,7 +105,7 @@ class AppDrawer extends StatelessWidget {
             ),
           ),
           // Dark / Light mode toggle
-          const Divider(height: 1),
+          Divider(height: 1),
           Consumer<ThemeProvider>(
             builder: (context, themeProvider, _) {
               final isDark = themeProvider.isDark;
@@ -144,7 +144,7 @@ class AppDrawer extends StatelessWidget {
             },
           ),
           // Logout
-          const Divider(height: 1),
+          Divider(height: 1),
           ListTile(
             contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
             leading: Container(
@@ -153,9 +153,9 @@ class AppDrawer extends StatelessWidget {
                 color: AppColors.error.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: const Icon(Icons.logout, color: AppColors.error, size: 20),
+              child: Icon(Icons.logout, color: AppColors.error, size: 20),
             ),
-            title: const Text(
+            title: Text(
               'Keluar',
               style: TextStyle(
                 color: AppColors.error,
@@ -251,12 +251,12 @@ class AppDrawer extends StatelessWidget {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Konfirmasi'),
-        content: const Text('Apakah Anda yakin ingin keluar?'),
+        title: Text('Konfirmasi'),
+        content: Text('Apakah Anda yakin ingin keluar?'),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(),
-            child: const Text('Batal'),
+            child: Text('Batal'),
           ),
           ElevatedButton(
             onPressed: () {
@@ -266,7 +266,7 @@ class AppDrawer extends StatelessWidget {
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.error,
             ),
-            child: const Text('Keluar'),
+            child: Text('Keluar'),
           ),
         ],
       ),

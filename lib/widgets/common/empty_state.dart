@@ -34,23 +34,23 @@ class EmptyState extends StatelessWidget {
               ),
               child: Icon(icon, size: 56, color: AppColors.primary.withValues(alpha: 0.5)),
             ),
-            const SizedBox(height: 24),
+            SizedBox(height: 24),
             Text(
               title,
               style: Theme.of(context).textTheme.titleLarge,
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: 8),
             Text(
               subtitle,
               style: Theme.of(context).textTheme.bodyMedium,
               textAlign: TextAlign.center,
             ),
             if (buttonLabel != null && onButtonPressed != null) ...[
-              const SizedBox(height: 24),
+              SizedBox(height: 24),
               ElevatedButton.icon(
                 onPressed: onButtonPressed,
-                icon: const Icon(Icons.add),
+                icon: Icon(Icons.add),
                 label: Text(buttonLabel!),
               ),
             ],
