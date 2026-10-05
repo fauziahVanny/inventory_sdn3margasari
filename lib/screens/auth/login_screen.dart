@@ -56,7 +56,26 @@ class _LoginScreenState extends State<LoginScreen>
     final isDark = themeProvider.isDark;
 
     return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        actions: [
+          IconButton(
+            tooltip: isDark ? 'Mode Terang' : 'Mode Gelap',
+            icon: Icon(
+              isDark ? Icons.wb_sunny_rounded : Icons.nightlight_round,
+              color: isDark ? Colors.amber : Colors.white70,
+              size: 26,
+            ),
+            onPressed: themeProvider.toggleTheme,
+          ),
+          const SizedBox(width: 8),
+        ],
+      ),
       body: Container(
+        height: double.infinity,
+        width: double.infinity,
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
@@ -68,42 +87,24 @@ class _LoginScreenState extends State<LoginScreen>
           ),
         ),
         child: SafeArea(
-          child: Stack(
-            children: [
-              // Toggle dark/light di pojok kanan atas
-              Positioned(
-                top: 8,
-                right: 8,
-                child: IconButton(
-                  tooltip: isDark ? 'Mode Terang' : 'Mode Gelap',
-                  icon: Icon(
-                    isDark ? Icons.wb_sunny_rounded : Icons.nightlight_round,
-                    color: isDark ? Colors.amber : Colors.white70,
-                    size: 26,
-                  ),
-                  onPressed: themeProvider.toggleTheme,
-                ),
-              ),
-              Center(
-                child: SingleChildScrollView(
-                  padding: const EdgeInsets.all(24),
-                  child: FadeTransition(
-                    opacity: _fadeAnimation,
-                    child: SlideTransition(
-                      position: _slideAnimation,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          _buildHeader(isDark),
-                          SizedBox(height: 40),
-                          _buildLoginCard(isDark),
-                        ],
-                      ),
-                    ),
+          child: Center(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(24),
+              child: FadeTransition(
+                opacity: _fadeAnimation,
+                child: SlideTransition(
+                  position: _slideAnimation,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      _buildHeader(isDark),
+                      const SizedBox(height: 40),
+                      _buildLoginCard(isDark),
+                    ],
                   ),
                 ),
               ),
-            ],
+            ),
           ),
         ),
       ),
