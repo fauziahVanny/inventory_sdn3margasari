@@ -65,7 +65,14 @@ class _KsDetailLaporanScreenState extends State<KsDetailLaporanScreen> {
         title: Text('Detail Laporan'),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
-          onPressed: () => context.go('/ks/approval'),
+          onPressed: () {
+            final currentPath = GoRouterState.of(context).uri.path;
+            if (currentPath.contains('/history')) {
+              context.go('/ks/history');
+            } else {
+              context.go('/ks/approval');
+            }
+          },
         ),
       ),
       body: SingleChildScrollView(

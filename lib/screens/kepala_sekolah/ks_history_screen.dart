@@ -176,9 +176,12 @@ class _KsHistoryScreenState extends State<KsHistoryScreen> {
     }
 
     // ── Data tersedia ──
-    return isDesktop
-        ? _buildDesktopLayout(context, prov.historyList)
-        : _buildMobileLayout(context, prov.historyList);
+    return Center(
+      child: Container(
+        constraints: const BoxConstraints(maxWidth: 800),
+        child: _buildMobileLayout(context, prov.historyList),
+      ),
+    );
   }
 
   // ─────────────────────────────────────────────
