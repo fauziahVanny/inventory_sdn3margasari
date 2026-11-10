@@ -9,7 +9,6 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:universal_html/html.dart' as html;
 import '../../core/theme/app_colors.dart';
 import '../../core/constants/app_constants.dart';
-import '../../models/user_model.dart';
 import '../../providers/laporan_provider.dart';
 import '../../providers/barang_provider.dart';
 import '../../widgets/laporan/status_badge.dart';
@@ -166,10 +165,28 @@ class _OpsDetailLaporanScreenState extends State<OpsDetailLaporanScreen> {
                 height: 52,
                 child: ElevatedButton.icon(
                   onPressed: () async {
+                    if (barangList.isEmpty) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Laporan tidak dapat diajukan karena belum ada data barang inventaris yang terdaftar.'),
+                          backgroundColor: AppColors.error,
+                        ),
+                      );
+                      return;
+                    }
+
                     final success = await context.read<LaporanProvider>().ajukanLaporan(laporan.id);
                     if (context.mounted) {
+                      final err = context.read<LaporanProvider>().errorMessage;
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text(success ? 'Laporan berhasil diajukan' : 'Gagal mengajukan laporan')),
+                        SnackBar(
+                          content: Text(success
+                              ? 'Laporan berhasil diajukan ke Kepala Sekolah'
+                              : (err != null && err.isNotEmpty
+                                  ? err
+                                  : 'Gagal mengajukan laporan ke Kepala Sekolah.')),
+                          backgroundColor: success ? AppColors.success : AppColors.error,
+                        ),
                       );
                       if (success) {
                         context.go('/ops/laporan');
@@ -206,10 +223,18 @@ class _OpsDetailLaporanScreenState extends State<OpsDetailLaporanScreen> {
                     );
 
                     if (confirm == true && context.mounted) {
-                      final success = await context.read<LaporanProvider>().hapusLaporan(laporan.id);
+                      final success = await context.read<LaporanProvider>().deleteLaporan(laporan.id);
                       if (context.mounted) {
+                        final err = context.read<LaporanProvider>().errorMessage;
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text(success ? 'Laporan berhasil dihapus' : 'Gagal menghapus laporan')),
+                          SnackBar(
+                            content: Text(success
+                                ? 'Laporan berhasil dihapus'
+                                : (err != null && err.isNotEmpty
+                                    ? err
+                                    : 'Gagal menghapus laporan. Laporan yang sudah disetujui tidak dapat dihapus.')),
+                            backgroundColor: success ? AppColors.success : AppColors.error,
+                          ),
                         );
                         if (success) {
                           context.go('/ops/laporan');

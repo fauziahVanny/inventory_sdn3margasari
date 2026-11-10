@@ -69,13 +69,20 @@ class AuthProvider extends ChangeNotifier {
         notifyListeners();
         return true;
       } else {
-        _errorMessage = response['message'];
+        _errorMessage = response['message'] ?? 'Login gagal. Periksa kembali username dan password Anda.';
         _isLoading = false;
         notifyListeners();
         return false;
       }
     } catch (e) {
-      _errorMessage = e.toString();
+      final raw = e.toString().replaceAll('Exception: ', '').trim();
+      if (raw.toLowerCase().contains('invalid') ||
+          raw.toLowerCase().contains('salah') ||
+          raw.toLowerCase().contains('tidak ditemukan')) {
+        _errorMessage = 'Username atau password yang Anda masukkan salah.';
+      } else {
+        _errorMessage = raw.isNotEmpty ? raw : 'Gagal login. Periksa koneksi ke server.';
+      }
       _isLoading = false;
       notifyListeners();
       return false;
@@ -88,6 +95,12 @@ class AuthProvider extends ChangeNotifier {
     _errorMessage = null;
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove('token');
+    notifyListeners();
+  }
+
+  /// Set pesan error secara eksplisit (misal validasi koneksi offline)
+  void setErrorMessage(String message) {
+    _errorMessage = message;
     notifyListeners();
   }
 

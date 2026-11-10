@@ -112,6 +112,33 @@ class WkDetailBarangScreen extends StatelessWidget {
             ]),
             SizedBox(height: 20),
 
+            // Detail khusus Buku jika ada
+            if (barang.judulBuku != null || barang.pengarang != null || barang.penerbit != null || barang.isbn != null) ...[
+              _buildSection(context, 'Detail Informasi Buku', [
+                if (barang.judulBuku != null && barang.judulBuku!.isNotEmpty)
+                  _infoRow(context, 'Judul Buku', barang.judulBuku!, Icons.menu_book),
+                if (barang.pengarang != null && barang.pengarang!.isNotEmpty)
+                  _infoRow(context, 'Pengarang', barang.pengarang!, Icons.person_outline),
+                if (barang.penerbit != null && barang.penerbit!.isNotEmpty)
+                  _infoRow(context, 'Penerbit', barang.penerbit!, Icons.business_outlined),
+                if (barang.kotaTerbit != null && barang.kotaTerbit!.isNotEmpty)
+                  _infoRow(context, 'Kota Terbit', barang.kotaTerbit!, Icons.location_city_outlined),
+                if (barang.cetakanEdisi != null && barang.cetakanEdisi!.isNotEmpty)
+                  _infoRow(context, 'Cetakan / Edisi', barang.cetakanEdisi!, Icons.layers_outlined),
+                if (barang.tahunTerbit != null)
+                  _infoRow(context, 'Tahun Terbit', '${barang.tahunTerbit}', Icons.date_range_outlined),
+                if (barang.jumlahHalaman != null)
+                  _infoRow(context, 'Jumlah Halaman', '${barang.jumlahHalaman} hlm', Icons.auto_stories_outlined),
+                if (barang.ilustrasi != null)
+                  _infoRow(context, 'Ilustrasi', barang.ilustrasi! ? 'Ya (Ada Gambar)' : 'Tidak', Icons.image_outlined),
+                if (barang.ukuranBuku != null && barang.ukuranBuku!.isNotEmpty)
+                  _infoRow(context, 'Ukuran Buku', barang.ukuranBuku!, Icons.straighten_outlined),
+                if (barang.isbn != null && barang.isbn!.isNotEmpty)
+                  _infoRow(context, 'ISBN', barang.isbn!, Icons.qr_code_2_outlined),
+              ]),
+              SizedBox(height: 20),
+            ],
+
             // Detail info
             _buildSection(context, 'Informasi Barang', [
               if (barang.merek != null && barang.merek!.isNotEmpty)

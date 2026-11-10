@@ -31,9 +31,14 @@ class _WkDashboardScreenState extends State<WkDashboardScreen> {
   Future<void> _loadData() async {
     final auth = context.read<AuthProvider>();
     final user = auth.currentUser;
-    if (user != null && user.kelasId != null) {
-      context.read<BarangProvider>().fetchBarangByKelas(user.kelasId!);
-      context.read<DashboardProvider>().fetchStatistikKelas(user.kelasId!);
+    if (user != null) {
+      if (user.kelasId != null) {
+        context.read<BarangProvider>().fetchBarangByKelas(user.kelasId!);
+        context.read<DashboardProvider>().fetchStatistikKelas(user.kelasId!);
+      } else {
+        context.read<BarangProvider>().fetchBarang();
+        context.read<DashboardProvider>().fetchStatistikGlobal();
+      }
     }
   }
 
@@ -47,13 +52,25 @@ class _WkDashboardScreenState extends State<WkDashboardScreen> {
     if (user == null) return const Scaffold(body: Center(child: CircularProgressIndicator()));
 
     final allBarangKelas = barangProv.allBarang;
-    final stats = dashboardProv.statistikKelas?['ringkasan'] ?? {
-      'total_item': 0,
-      'total_layak': 0,
-      'total_rusak_sedang': 0,
-      'total_rusak_berat': 0,
-      'total_hilang': 0,
-    };
+    Map<String, dynamic>? rawStats;
+    if (user.kelasId != null) {
+      rawStats = dashboardProv.statistikKelas != null
+          ? dashboardProv.statistikKelas!['ringkasan'] as Map<String, dynamic>?
+          : null;
+    } else {
+      rawStats = dashboardProv.statistikGlobal != null
+          ? dashboardProv.statistikGlobal!['ringkasan'] as Map<String, dynamic>?
+          : null;
+    }
+
+    final stats = rawStats ??
+        {
+          'total_item': allBarangKelas.length,
+          'total_layak': allBarangKelas.fold<int>(0, (acc, b) => acc + b.jumlahLayak),
+          'total_rusak_sedang': allBarangKelas.fold<int>(0, (acc, b) => acc + b.jumlahRusakSedang),
+          'total_rusak_berat': allBarangKelas.fold<int>(0, (acc, b) => acc + b.jumlahRusakBerat),
+          'total_hilang': allBarangKelas.fold<int>(0, (acc, b) => acc + b.jumlahHilang),
+        };
 
     return Scaffold(
       appBar: AppBar(
@@ -62,7 +79,7 @@ class _WkDashboardScreenState extends State<WkDashboardScreen> {
           children: [
             Text('Dashboard'),
             Text(
-              user.namaKelas ?? '',
+              user.namaKelas ?? user.role.label,
               style: TextStyle(fontSize: 13, fontWeight: FontWeight.w400, color: AppColors.textSecondary),
             ),
           ],

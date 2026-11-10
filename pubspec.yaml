@@ -22,6 +22,7 @@ dependencies:
   universal_html: ^2.3.0
   http: ^1.6.0
   shared_preferences: ^2.5.5
+  connectivity_plus: ^7.3.2
 dev_dependencies:
   flutter_test:
     sdk: flutter

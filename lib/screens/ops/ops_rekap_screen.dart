@@ -226,23 +226,33 @@ class _OpsRekapScreenState extends State<OpsRekapScreen> {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text('Hapus Barang'),
-        content: Text('Apakah Anda yakin ingin menghapus "$nama"?'),
+        title: Text('Arsipkan Barang'),
+        content: Text('Apakah Anda yakin ingin mengarsipkan "$nama"? Barang akan disembunyikan dari daftar aktif.'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
             child: Text('Batal'),
           ),
           ElevatedButton(
-            onPressed: () {
-              prov.deleteBarang(id);
+            onPressed: () async {
               Navigator.pop(ctx);
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('"$nama" berhasil dihapus')),
-              );
+              final success = await prov.deleteBarang(id);
+              if (context.mounted) {
+                final err = prov.errorMessage;
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(success
+                        ? '"$nama" berhasil diarsipkan'
+                        : (err != null && err.isNotEmpty
+                            ? err
+                            : 'Gagal mengarsipkan "$nama".')),
+                    backgroundColor: success ? AppColors.success : AppColors.error,
+                  ),
+                );
+              }
             },
-            style: ElevatedButton.styleFrom(backgroundColor: AppColors.error),
-            child: Text('Hapus'),
+            style: ElevatedButton.styleFrom(backgroundColor: AppColors.warning),
+            child: Text('Arsipkan'),
           ),
         ],
       ),

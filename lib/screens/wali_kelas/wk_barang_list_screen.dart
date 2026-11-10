@@ -31,6 +31,8 @@ class _WkBarangListScreenState extends State<WkBarangListScreen> {
       final kelasId = auth.currentUser?.kelasId;
       if (kelasId != null) {
         context.read<BarangProvider>().fetchBarangByKelas(kelasId);
+      } else {
+        context.read<BarangProvider>().fetchBarang();
       }
     });
     _loadKategori();
@@ -40,12 +42,40 @@ class _WkBarangListScreenState extends State<WkBarangListScreen> {
     try {
       final res = await ApiService.get('/kategori');
       if (mounted) {
+        final apiCategories = (res['data'] as List).map((e) => KategoriModel.fromJson(e)).toList();
+        final defaultCategories = [
+          const KategoriModel(id: 'kat-buku', kode: 'BK', namaKategori: 'Buku'),
+          const KategoriModel(id: 'kat-olahraga', kode: 'OR', namaKategori: 'Peralatan Olahraga'),
+          const KategoriModel(id: 'kat-furniture', kode: 'FR', namaKategori: 'Furniture'),
+          const KategoriModel(id: 'kat-elektronik', kode: 'EL', namaKategori: 'Elektronik'),
+          const KategoriModel(id: 'kat-perkakas', kode: 'PK', namaKategori: 'Perkakas'),
+          const KategoriModel(id: 'kat-lainnya', kode: 'LN', namaKategori: 'Lainnya'),
+        ];
+        final merged = <KategoriModel>[...apiCategories];
+        for (final def in defaultCategories) {
+          if (!merged.any((c) =>
+              c.namaKategori.toLowerCase() == def.namaKategori.toLowerCase() ||
+              c.kode.toUpperCase() == def.kode.toUpperCase())) {
+            merged.add(def);
+          }
+        }
         setState(() {
-          _kategoriList = (res['data'] as List).map((e) => KategoriModel.fromJson(e)).toList();
+          _kategoriList = merged;
         });
       }
     } catch (e) {
-      // ignore
+      if (mounted) {
+        setState(() {
+          _kategoriList = const [
+            KategoriModel(id: 'kat-buku', kode: 'BK', namaKategori: 'Buku'),
+            KategoriModel(id: 'kat-olahraga', kode: 'OR', namaKategori: 'Peralatan Olahraga'),
+            KategoriModel(id: 'kat-furniture', kode: 'FR', namaKategori: 'Furniture'),
+            KategoriModel(id: 'kat-elektronik', kode: 'EL', namaKategori: 'Elektronik'),
+            KategoriModel(id: 'kat-perkakas', kode: 'PK', namaKategori: 'Perkakas'),
+            KategoriModel(id: 'kat-lainnya', kode: 'LN', namaKategori: 'Lainnya'),
+          ];
+        });
+      }
     }
   }
 
@@ -364,8 +394,8 @@ class _WkBarangListScreenState extends State<WkBarangListScreen> {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text('Hapus Barang'),
-        content: Text('Apakah Anda yakin ingin menghapus "$nama"?'),
+        title: Text('Arsipkan Barang'),
+        content: Text('Apakah Anda yakin ingin mengarsipkan "$nama"? Barang akan disembunyikan dari daftar aktif.'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
@@ -376,13 +406,21 @@ class _WkBarangListScreenState extends State<WkBarangListScreen> {
               Navigator.pop(ctx);
               final success = await prov.deleteBarang(id);
               if (context.mounted) {
+                final err = prov.errorMessage;
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text(success ? '"$nama" berhasil dihapus' : 'Gagal menghapus barang')),
+                  SnackBar(
+                    content: Text(success
+                        ? '"$nama" berhasil diarsipkan'
+                        : (err != null && err.isNotEmpty
+                            ? err
+                            : 'Gagal mengarsipkan "$nama".')),
+                    backgroundColor: success ? AppColors.success : AppColors.error,
+                  ),
                 );
               }
             },
-            style: ElevatedButton.styleFrom(backgroundColor: AppColors.error),
-            child: Text('Hapus'),
+            style: ElevatedButton.styleFrom(backgroundColor: AppColors.warning),
+            child: Text('Arsipkan'),
           ),
         ],
       ),

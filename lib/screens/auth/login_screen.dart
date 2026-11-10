@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
-import '../../core/theme/app_colors.dart';
 import '../../core/constants/app_constants.dart';
+import '../../core/services/network_service.dart';
+import '../../core/theme/app_colors.dart';
 import '../../providers/auth_provider.dart';
 import '../../providers/theme_provider.dart';
 
@@ -299,9 +300,50 @@ class _LoginScreenState extends State<LoginScreen>
     );
   }
 
+  /// Memeriksa koneksi internet menggunakan NetworkService (cross-platform).
+  /// Mengembalikan true jika perangkat terhubung ke internet, false jika offline.
+  Future<bool> _checkInternetConnection() => NetworkService.isConnected();
+
   Future<void> _handleLogin() async {
     if (!_formKey.currentState!.validate()) return;
 
+    // ── Pengecekan Koneksi Internet ─────────────────────────────────────────
+    // Tahan request ke server jika perangkat sedang offline.
+    final isConnected = await _checkInternetConnection();
+    if (!isConnected) {
+      if (mounted) {
+        context.read<AuthProvider>().setErrorMessage(
+          'Tidak ada koneksi internet. Silakan sambungkan ke jaringan.',
+        );
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Row(
+              children: [
+                const Icon(Icons.wifi_off_rounded, color: Colors.white, size: 20),
+                const SizedBox(width: 12),
+                const Expanded(
+                  child: Text(
+                    'Tidak ada koneksi internet. Silakan sambungkan ke jaringan.',
+                    style: TextStyle(fontSize: 13),
+                  ),
+                ),
+              ],
+            ),
+            backgroundColor: const Color(0xFFB71C1C),
+            duration: const Duration(seconds: 4),
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            margin: const EdgeInsets.all(16),
+          ),
+        );
+      }
+      return; // Hentikan proses — tidak ada request ke server saat offline
+    }
+    // ───────────────────────────────────────────────────────────────────────
+
+    if (!mounted) return;
     final auth = context.read<AuthProvider>();
     auth.clearError();
 
@@ -314,6 +356,9 @@ class _LoginScreenState extends State<LoginScreen>
       final role = auth.currentUser!.role;
       switch (role) {
         case UserRole.waliKelas:
+        case UserRole.guruPAI:
+        case UserRole.guruPJOK:
+        case UserRole.penjagaSekolah:
           context.go('/wk/dashboard');
         case UserRole.ops:
           context.go('/ops/dashboard');

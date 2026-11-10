@@ -176,10 +176,13 @@ class _KsHistoryScreenState extends State<KsHistoryScreen> {
     }
 
     // ── Data tersedia ──
+    final isDesktop = MediaQuery.of(context).size.width >= 720;
     return Center(
       child: Container(
-        constraints: const BoxConstraints(maxWidth: 800),
-        child: _buildMobileLayout(context, prov.historyList),
+        constraints: BoxConstraints(maxWidth: isDesktop ? 1200 : 800),
+        child: isDesktop
+            ? _buildDesktopLayout(context, prov.historyList)
+            : _buildMobileLayout(context, prov.historyList),
       ),
     );
   }

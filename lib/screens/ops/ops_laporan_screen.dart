@@ -170,7 +170,10 @@ class _OpsLaporanScreenState extends State<OpsLaporanScreen> with SingleTickerPr
                   onPressed: () async {
                     if (selectedJenis == JenisLaporan.perKelas && selectedKelasId == null) {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Silakan pilih kelas terlebih dahulu')),
+                        const SnackBar(
+                          content: Text('Silakan pilih kelas terlebih dahulu untuk laporan per kelas.'),
+                          backgroundColor: AppColors.warning,
+                        ),
                       );
                       return;
                     }
@@ -186,8 +189,16 @@ class _OpsLaporanScreenState extends State<OpsLaporanScreen> with SingleTickerPr
                     ));
                     if (context.mounted) {
                       Navigator.pop(ctx);
+                      final err = laporanProv.errorMessage;
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text(success ? 'Laporan berhasil dibuat' : 'Gagal membuat laporan')),
+                        SnackBar(
+                          content: Text(success
+                              ? 'Laporan berhasil dibuat'
+                              : (err != null && err.isNotEmpty
+                                  ? err
+                                  : 'Gagal membuat laporan. Periksa koneksi ke server.')),
+                          backgroundColor: success ? AppColors.success : AppColors.error,
+                        ),
                       );
                     }
                   },

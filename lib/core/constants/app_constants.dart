@@ -12,7 +12,10 @@ class AppConstants {
 enum UserRole {
   waliKelas('Wali Kelas'),
   ops('Operator Sekolah'),
-  kepalaSekolah('Kepala Sekolah');
+  kepalaSekolah('Kepala Sekolah'),
+  guruPAI('Guru Pendidikan Agama Islam'),
+  guruPJOK('Guru PJOK'),
+  penjagaSekolah('Penjaga Sekolah');
 
   final String label;
   const UserRole(this.label);
@@ -34,7 +37,10 @@ enum SumberDana {
   bantuanPemerintah('Bantuan Pemerintah'),
   danaBos('Dana BOS'),
   komiteSekolah('Komite Sekolah'),
-  beliSendiri('Beli Sendiri (Swadaya)');
+  beliSendiri('Beli Sendiri (Swadaya)'),
+  sumbangan('Sumbangan'),
+  hibah('Hibah'),
+  lainnya('Lainnya');
 
   final String label;
   const SumberDana(this.label);

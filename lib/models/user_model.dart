@@ -53,6 +53,16 @@ class UserModel {
       case 'wali_kelas':
         parsedRole = UserRole.waliKelas;
         break;
+      case 'guru_pai':
+      case 'guru_pendidikan_agama_islam':
+        parsedRole = UserRole.guruPAI;
+        break;
+      case 'guru_pjok':
+        parsedRole = UserRole.guruPJOK;
+        break;
+      case 'penjaga_sekolah':
+        parsedRole = UserRole.penjagaSekolah;
+        break;
       case 'ops':
       default:
         parsedRole = UserRole.ops;
@@ -75,6 +85,9 @@ class UserModel {
     switch (role) {
       case UserRole.kepalaSekolah: roleStr = 'kepala_sekolah'; break;
       case UserRole.waliKelas: roleStr = 'wali_kelas'; break;
+      case UserRole.guruPAI: roleStr = 'guru_pai'; break;
+      case UserRole.guruPJOK: roleStr = 'guru_pjok'; break;
+      case UserRole.penjagaSekolah: roleStr = 'penjaga_sekolah'; break;
       case UserRole.ops: roleStr = 'ops'; break;
     }
     return {

@@ -135,7 +135,7 @@ class AppDrawer extends StatelessWidget {
                 trailing: Switch(
                   value: isDark,
                   onChanged: (_) => themeProvider.toggleTheme(),
-                  activeColor: Colors.amber,
+                  activeThumbColor: Colors.amber,
                   inactiveThumbColor: Colors.indigo,
                   inactiveTrackColor: Colors.indigo.withValues(alpha: 0.2),
                 ),
@@ -176,6 +176,9 @@ class AppDrawer extends StatelessWidget {
   List<Widget> _getMenuItems(BuildContext context, UserRole role) {
     switch (role) {
       case UserRole.waliKelas:
+      case UserRole.guruPAI:
+      case UserRole.guruPJOK:
+      case UserRole.penjagaSekolah:
         return [
           _menuItem(context, Icons.dashboard_outlined, 'Dashboard', '/wk/dashboard'),
           _menuItem(context, Icons.inventory_2_outlined, 'Daftar Barang', '/wk/barang'),

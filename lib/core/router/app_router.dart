@@ -50,6 +50,9 @@ class AppRouter {
       if (isLoggedIn && (isLoginRoute || isSplashRoute)) {
         switch (authProvider.currentRole!) {
           case UserRole.waliKelas:
+          case UserRole.guruPAI:
+          case UserRole.guruPJOK:
+          case UserRole.penjagaSekolah:
             return '/wk/dashboard';
           case UserRole.ops:
             return '/ops/dashboard';

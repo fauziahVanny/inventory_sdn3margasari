@@ -15,6 +15,23 @@ class ApiService {
     };
   }
 
+  static String _formatError(dynamic e) {
+    final str = e.toString().replaceAll('Exception: ', '').trim();
+    if (str.contains('SocketException') ||
+        str.contains('Connection refused') ||
+        str.contains('Failed host lookup') ||
+        str.contains('ClientException')) {
+      return 'Tidak dapat terhubung ke server. Pastikan server backend sedang aktif.';
+    }
+    if (str.contains('TimeoutException')) {
+      return 'Batas waktu koneksi ke server habis. Silakan coba lagi.';
+    }
+    if (str.contains('FormatException')) {
+      return 'Format data respons dari server tidak valid.';
+    }
+    return str;
+  }
+
   static Future<Map<String, dynamic>> get(String endpoint) async {
     try {
       final response = await http.get(
@@ -23,7 +40,7 @@ class ApiService {
       );
       return _processResponse(response);
     } catch (e) {
-      throw Exception(e.toString().replaceAll('Exception: ', ''));
+      throw Exception(_formatError(e));
     }
   }
 
@@ -36,7 +53,7 @@ class ApiService {
       );
       return _processResponse(response);
     } catch (e) {
-      throw Exception(e.toString().replaceAll('Exception: ', ''));
+      throw Exception(_formatError(e));
     }
   }
 
@@ -49,7 +66,7 @@ class ApiService {
       );
       return _processResponse(response);
     } catch (e) {
-      throw Exception(e.toString().replaceAll('Exception: ', ''));
+      throw Exception(_formatError(e));
     }
   }
 
@@ -61,7 +78,7 @@ class ApiService {
       );
       return _processResponse(response);
     } catch (e) {
-      throw Exception(e.toString().replaceAll('Exception: ', ''));
+      throw Exception(_formatError(e));
     }
   }
 
@@ -71,12 +88,12 @@ class ApiService {
       if (response.statusCode >= 200 && response.statusCode < 300) {
         return decoded;
       } else {
-        String message = decoded['message'] ?? 'Terjadi kesalahan pada server';
+        String message = decoded['message'] ?? 'Terjadi kesalahan pada server (Kode: ${response.statusCode})';
         throw Exception(message);
       }
     } catch (e) {
       if (e is FormatException) {
-         throw Exception('Format respons tidak valid (Bukan JSON)');
+        throw Exception('Format respons tidak valid (Kode: ${response.statusCode})');
       }
       rethrow;
     }

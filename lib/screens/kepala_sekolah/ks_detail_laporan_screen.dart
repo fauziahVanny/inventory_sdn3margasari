@@ -242,16 +242,25 @@ class _KsDetailLaporanScreenState extends State<KsDetailLaporanScreen> {
             child: Text('Batal'),
           ),
           ElevatedButton.icon(
-            onPressed: () {
-              prov.setujuiLaporan(widget.laporanId);
+            onPressed: () async {
               Navigator.pop(ctx);
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Laporan berhasil disetujui ✅'),
-                  backgroundColor: AppColors.kondisiLayak,
-                ),
-              );
-              context.go('/ks/approval');
+              final success = await prov.setujuiLaporan(widget.laporanId);
+              if (context.mounted) {
+                final err = prov.errorMessage;
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(success
+                        ? 'Laporan berhasil disetujui ✅'
+                        : (err != null && err.isNotEmpty
+                            ? err
+                            : 'Gagal menyetujui laporan. Periksa koneksi ke server.')),
+                    backgroundColor: success ? AppColors.kondisiLayak : AppColors.error,
+                  ),
+                );
+                if (success) {
+                  context.go('/ks/approval');
+                }
+              }
             },
             icon: Icon(Icons.verified),
             label: Text('Setujui'),
@@ -271,14 +280,15 @@ class _KsDetailLaporanScreenState extends State<KsDetailLaporanScreen> {
         title: Text('Kembalikan untuk Revisi'),
         content: Column(
           mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Berikan catatan revisi untuk OPS:'),
+            Text('Berikan catatan revisi untuk Operator Sekolah (wajib):'),
             SizedBox(height: 12),
             TextField(
               controller: catatanController,
               maxLines: 3,
               decoration: const InputDecoration(
-                hintText: 'Tulis catatan revisi...',
+                hintText: 'Tuliskan rincian apa yang perlu direvisi...',
               ),
             ),
           ],
@@ -289,16 +299,35 @@ class _KsDetailLaporanScreenState extends State<KsDetailLaporanScreen> {
             child: Text('Batal'),
           ),
           ElevatedButton(
-            onPressed: () {
-              prov.revisiLaporan(widget.laporanId, catatanController.text);
+            onPressed: () async {
+              final catatan = catatanController.text.trim();
+              if (catatan.isEmpty) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Catatan revisi wajib diisi agar Operator Sekolah mengetahui bagian yang harus diperbaiki.'),
+                    backgroundColor: AppColors.error,
+                  ),
+                );
+                return;
+              }
               Navigator.pop(ctx);
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Laporan dikembalikan untuk revisi'),
-                  backgroundColor: AppColors.warning,
-                ),
-              );
-              context.go('/ks/approval');
+              final success = await prov.revisiLaporan(widget.laporanId, catatan);
+              if (context.mounted) {
+                final err = prov.errorMessage;
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(success
+                        ? 'Laporan dikembalikan untuk revisi'
+                        : (err != null && err.isNotEmpty
+                            ? err
+                            : 'Gagal mengembalikan laporan revisi.')),
+                    backgroundColor: success ? AppColors.warning : AppColors.error,
+                  ),
+                );
+                if (success) {
+                  context.go('/ks/approval');
+                }
+              }
             },
             style: ElevatedButton.styleFrom(backgroundColor: AppColors.warning),
             child: Text('Kirim Revisi'),
