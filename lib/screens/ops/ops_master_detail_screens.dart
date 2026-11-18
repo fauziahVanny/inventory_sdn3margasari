@@ -258,14 +258,15 @@ class _OpsMasterRuanganScreenState extends State<OpsMasterRuanganScreen> {
     if (result == true) _loadData();
   }
 
-  Future<void> _delete(String id, String nama) async {
+  Future<void> _archive(String id, String nama) async {
     final ok = await _confirmDelete(context, nama);
     if (!ok) return;
     try {
-      await ApiService.delete('/ruangan/$id');
+      // Soft delete (archive) via PUT
+      await ApiService.put('/ruangan/$id', {'is_hidden': true, 'status': 'unseen'});
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('$nama berhasil dihapus'), backgroundColor: AppColors.success),
+          SnackBar(content: Text('$nama berhasil diarsipkan'), backgroundColor: AppColors.warning),
         );
         _loadData();
       }

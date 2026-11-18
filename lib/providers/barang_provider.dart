@@ -62,7 +62,14 @@ class BarangProvider extends ChangeNotifier {
   }
 
   /// Ambil barang dari cache yang sudah difilter
-  List<BarangModel> get filteredBarang => _applyFilters(_barangList);
+  // Getter for active (non‑archived) barang
+  List<BarangModel> get activeBarang => _barangList.where((b) => b.isSeen).toList();
+
+  // Getter for archived barang
+  List<BarangModel> get archivedBarang => _barangList.where((b) => !b.isSeen).toList();
+
+  // Updated filteredBarang to return only active items after applying other filters
+  List<BarangModel> get filteredBarang => _applyFilters(activeBarang);
 
   /// Ambil barang berdasarkan kelas filter dari cache
   List<BarangModel> getBarangByKelasFilter(String? kelasId) {
@@ -165,13 +172,45 @@ class BarangProvider extends ChangeNotifier {
     }
   }
 
-  /// Hapus barang via API
-  Future<bool> deleteBarang(String id) async {
+  /// Arsipkan barang via API (soft delete)
+  Future<bool> archiveBarang(String id) async {
     try {
-      final response = await ApiService.delete('/barang/$id');
+      final response = await ApiService.put('/barang/$id', {
+        'is_hidden': true,
+        'status': 'unseen',
+      });
       if (response['success'] == true) {
-        _barangList.removeWhere((b) => b.id == id);
-        notifyListeners();
+        // Update local list
+        final index = _barangList.indexWhere((b) => b.id == id);
+        if (index != -1) {
+          final updated = _barangList[index].copyWith(isHidden: true, status: 'unseen');
+          _barangList[index] = updated;
+          notifyListeners();
+        }
+        return true;
+      }
+      return false;
+    } catch (e) {
+      _errorMessage = e.toString();
+      notifyListeners();
+      return false;
+    }
+  }
+
+  /// Pulihkan barang yang diarsipkan
+  Future<bool> restoreBarang(String id) async {
+    try {
+      final response = await ApiService.put('/barang/$id', {
+        'is_hidden': false,
+        'status': 'seen',
+      });
+      if (response['success'] == true) {
+        final index = _barangList.indexWhere((b) => b.id == id);
+        if (index != -1) {
+          final updated = _barangList[index].copyWith(isHidden: false, status: 'seen');
+          _barangList[index] = updated;
+          notifyListeners();
+        }
         return true;
       }
       return false;

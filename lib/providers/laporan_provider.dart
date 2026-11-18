@@ -228,7 +228,65 @@ class LaporanProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Hapus laporan (hanya jika draft)
+  /// Arsipkan laporan via API (soft delete)
+  Future<bool> archiveLaporan(String id) async {
+    try {
+      final response = await ApiService.put('/laporan/$id', {
+        'is_hidden': true,
+        'status_data': 'unseen',
+      });
+      if (response['success'] == true) {
+        final index = _laporanList.indexWhere((l) => l.id == id);
+        if (index != -1) {
+          final updated = _laporanList[index].copyWith(isHidden: true, statusData: 'unseen');
+          _laporanList[index] = updated;
+          notifyListeners();
+        }
+        return true;
+      }
+      return false;
+    } catch (e) {
+      _errorMessage = e.toString();
+      notifyListeners();
+      return false;
+    }
+  }
+
+  /// Pulihkan laporan yang diarsipkan
+  Future<bool> restoreLaporan(String id) async {
+    try {
+      final response = await ApiService.put('/laporan/$id', {
+        'is_hidden': false,
+        'status_data': 'seen',
+      });
+      if (response['success'] == true) {
+        final index = _laporanList.indexWhere((l) => l.id == id);
+        if (index != -1) {
+          final updated = _laporanList[index].copyWith(isHidden: false, statusData: 'seen');
+          _laporanList[index] = updated;
+          notifyListeners();
+        }
+        return true;
+      }
+      return false;
+    } catch (e) {
+      _errorMessage = e.toString();
+      notifyListeners();
+      return false;
+    }
+  }
+
+  // Getter for active (non‑archived) laporan
+  List<LaporanModel> get activeLaporan => _laporanList.where((l) => l.isSeen).toList();
+
+  // Getter for archived laporan
+  List<LaporanModel> get archivedLaporan => _laporanList.where((l) => !l.isSeen).toList();
+
+  // Replace deleteLaporan with archiveLaporan (maintain method name for compatibility)
+  Future<bool> deleteLaporan(String id) async => archiveLaporan(id);
+
+  // Keep hapusLaporan as alias to archive as well
+  Future<bool> hapusLaporan(String id) async => archiveLaporan(id);
   Future<bool> deleteLaporan(String id) async {
     try {
       final response = await ApiService.delete('/laporan/$id');
