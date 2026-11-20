@@ -287,38 +287,8 @@ class LaporanProvider extends ChangeNotifier {
 
   // Keep hapusLaporan as alias to archive as well
   Future<bool> hapusLaporan(String id) async => archiveLaporan(id);
-  Future<bool> deleteLaporan(String id) async {
-    try {
-      final response = await ApiService.delete('/laporan/$id');
-      if (response['success'] == true) {
-        _laporanList.removeWhere((l) => l.id == id);
-        notifyListeners();
-        return true;
-      }
-      return false;
-    } catch (e) {
-      // Mock Fallback
-      _laporanList.removeWhere((l) => l.id == id);
-      notifyListeners();
-      return true;
-    }
-  }
+
 
   /// Hapus laporan
-  Future<bool> hapusLaporan(String id) async {
-    try {
-      final response = await ApiService.delete('/laporan/$id');
-      if (response['success'] == true) {
-        _laporanList.removeWhere((l) => l.id == id);
-        notifyListeners();
-        return true;
-      }
-      return false;
-    } catch (e) {
-      // Mock Fallback
-      _laporanList.removeWhere((l) => l.id == id);
-      notifyListeners();
-      return true;
-    }
-  }
+
 }

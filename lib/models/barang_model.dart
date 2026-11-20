@@ -2,6 +2,7 @@ import '../core/constants/app_constants.dart';
 
 /// Model barang inventaris
 class BarangModel {
+  // Core fields
   final String id;
   final String kodeBarang; // auto-generate: FR_KE1_1025
   final String namaBarang;
@@ -20,7 +21,7 @@ class BarangModel {
   final int jumlahHilang;
   final int jumlahAwal;
   final SumberDana sumberDana;
-  
+
   // Atribut Khusus Kategori Buku
   final String? judulBuku;
   final String? pengarang;
@@ -33,13 +34,18 @@ class BarangModel {
   final String? ukuranBuku;
   final String? isbn;
 
-  // Atribut Soft Delete
+  // Soft‑delete & status handling
   final bool isHidden;
+  final String status; // e.g. 'seen', 'unseen', etc.
 
+  // Derived / meta fields
   int get jumlahSekarang => jumlahLayak + jumlahRusakSedang + jumlahRusakBerat + jumlahHilang;
   final DateTime tanggalPerolehan;
   final String dicatatOleh; // user id
   final DateTime updatedAt;
+
+  // Visibility getter
+  bool get isSeen => !isHidden && status != 'unseen';
 
   const BarangModel({
     required this.id,
@@ -60,8 +66,8 @@ class BarangModel {
     required this.jumlahHilang,
     required this.jumlahAwal,
     required this.sumberDana,
-    
-    // Inisialisasi Buku
+
+    // Buku attributes
     this.judulBuku,
     this.pengarang,
     this.penerbit,
@@ -72,8 +78,10 @@ class BarangModel {
     this.ilustrasi,
     this.ukuranBuku,
     this.isbn,
-    
-    this.isHidden = false, // Default tidak diarsipkan
+
+    // Soft‑delete & status defaults
+    this.isHidden = false,
+    this.status = 'seen',
     required this.tanggalPerolehan,
     required this.dicatatOleh,
     required this.updatedAt,
@@ -109,6 +117,7 @@ class BarangModel {
     String? ukuranBuku,
     String? isbn,
     bool? isHidden,
+    String? status,
     DateTime? tanggalPerolehan,
     String? dicatatOleh,
     DateTime? updatedAt,
@@ -143,6 +152,7 @@ class BarangModel {
       ukuranBuku: ukuranBuku ?? this.ukuranBuku,
       isbn: isbn ?? this.isbn,
       isHidden: isHidden ?? this.isHidden,
+      status: status ?? this.status,
       tanggalPerolehan: tanggalPerolehan ?? this.tanggalPerolehan,
       dicatatOleh: dicatatOleh ?? this.dicatatOleh,
       updatedAt: updatedAt ?? this.updatedAt,
@@ -175,7 +185,7 @@ class BarangModel {
         parsedSumber = SumberDana.danaBos;
         break;
     }
-    
+
     return BarangModel(
       id: json['id'] ?? '',
       kodeBarang: json['kode_barang'] ?? '',
@@ -202,16 +212,17 @@ class BarangModel {
       cetakanEdisi: json['cetakan_edisi'],
       tahunTerbit: json['tahun_terbit'],
       jumlahHalaman: json['jumlah_halaman'],
-      ilustrasi: json['ilustrasi'],
+      ilustrasi: json['ilustrasi'] is bool ? json['ilustrasi'] : (json['ilustrasi'] == 'Ya' ? true : (json['ilustrasi'] == 'Tidak' ? false : null)),
       ukuranBuku: json['ukuran_buku'],
       isbn: json['isbn'],
       isHidden: json['is_hidden'] ?? false,
-      tanggalPerolehan: json['tanggal_perolehan'] != null 
-          ? DateTime.parse(json['tanggal_perolehan']) 
+      status: json['status'] ?? 'seen',
+      tanggalPerolehan: json['tanggal_perolehan'] != null
+          ? DateTime.parse(json['tanggal_perolehan'])
           : DateTime.now(),
       dicatatOleh: json['dicatat_oleh'] ?? '',
-      updatedAt: json['updated_at'] != null 
-          ? DateTime.parse(json['updated_at']) 
+      updatedAt: json['updated_at'] != null
+          ? DateTime.parse(json['updated_at'])
           : DateTime.now(),
     );
   }
@@ -219,15 +230,28 @@ class BarangModel {
   Map<String, dynamic> toJson() {
     String sumberStr;
     switch (sumberDana) {
-      case SumberDana.bantuanPemerintah: sumberStr = 'bantuan_pemerintah'; break;
-      case SumberDana.komiteSekolah: sumberStr = 'komite_sekolah'; break;
-      case SumberDana.beliSendiri: sumberStr = 'beli_sendiri'; break;
-      case SumberDana.sumbangan: sumberStr = 'sumbangan'; break;
-      case SumberDana.hibah: sumberStr = 'hibah'; break;
-      case SumberDana.lainnya: sumberStr = 'lainnya'; break;
-      case SumberDana.danaBos: sumberStr = 'dana_bos'; break;
+      case SumberDana.bantuanPemerintah:
+        sumberStr = 'bantuan_pemerintah';
+        break;
+      case SumberDana.komiteSekolah:
+        sumberStr = 'komite_sekolah';
+        break;
+      case SumberDana.beliSendiri:
+        sumberStr = 'beli_sendiri';
+        break;
+      case SumberDana.sumbangan:
+        sumberStr = 'sumbangan';
+        break;
+      case SumberDana.hibah:
+        sumberStr = 'hibah';
+        break;
+      case SumberDana.lainnya:
+        sumberStr = 'lainnya';
+        break;
+      case SumberDana.danaBos:
+        sumberStr = 'dana_bos';
+        break;
     }
-    
     return {
       if (id.isNotEmpty) 'id': id,
       'nama_barang': namaBarang,
@@ -249,10 +273,11 @@ class BarangModel {
       if (cetakanEdisi != null) 'cetakan_edisi': cetakanEdisi,
       if (tahunTerbit != null) 'tahun_terbit': tahunTerbit,
       if (jumlahHalaman != null) 'jumlah_halaman': jumlahHalaman,
-      if (ilustrasi != null) 'ilustrasi': ilustrasi,
+      if (ilustrasi != null) 'ilustrasi': ilustrasi! ? 'Ya' : 'Tidak',
       if (ukuranBuku != null) 'ukuran_buku': ukuranBuku,
       if (isbn != null) 'isbn': isbn,
       'is_hidden': isHidden,
+      'status': status,
       'tanggal_perolehan': tanggalPerolehan.toIso8601String().split('T')[0],
     };
   }

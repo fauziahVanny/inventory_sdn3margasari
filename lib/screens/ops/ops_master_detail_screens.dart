@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/services/api_service.dart';
-import '../../widgets/common/app_drawer.dart';
+
 
 /// CRUD Kategori Barang
 class OpsMasterKategoriScreen extends StatefulWidget {
@@ -312,7 +312,7 @@ class _OpsMasterRuanganScreenState extends State<OpsMasterRuanganScreen> {
                         title: item['nama_ruangan'] ?? '-',
                         subtitle: item['deskripsi'] ?? 'Tidak ada deskripsi',
                         onEdit: () => _showFormDialog(item: item),
-                        onDelete: () => _delete(item['id'], item['nama_ruangan']),
+                        onDelete: () => _archive(item['id'], item['nama_ruangan']),
                       );
                     },
                   ),

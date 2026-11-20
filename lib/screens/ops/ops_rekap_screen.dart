@@ -236,7 +236,7 @@ class _OpsRekapScreenState extends State<OpsRekapScreen> {
           ElevatedButton(
             onPressed: () async {
               Navigator.pop(ctx);
-              final success = await prov.deleteBarang(id);
+              final success = await prov.archiveBarang(id);
               if (context.mounted) {
                 final err = prov.errorMessage;
                 ScaffoldMessenger.of(context).showSnackBar(

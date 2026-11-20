@@ -17,6 +17,13 @@ class LaporanModel {
   final String? namaPenyetuju;
   final String? namaKelas;
 
+  // Soft delete fields
+  final bool isHidden;
+  final String statusData;
+
+  // Getter to determine if laporan is seen (not hidden and not unseen)
+  bool get isSeen => !isHidden && statusData != 'unseen';
+
   const LaporanModel({
     required this.id,
     required this.jenis,
@@ -32,6 +39,8 @@ class LaporanModel {
     this.namaPengaju,
     this.namaPenyetuju,
     this.namaKelas,
+    this.isHidden = false,
+    this.statusData = 'seen',
   });
 
   LaporanModel copyWith({
@@ -49,6 +58,8 @@ class LaporanModel {
     String? namaPengaju,
     String? namaPenyetuju,
     String? namaKelas,
+    bool? isHidden,
+    String? statusData,
   }) {
     return LaporanModel(
       id: id ?? this.id,
@@ -65,6 +76,8 @@ class LaporanModel {
       namaPengaju: namaPengaju ?? this.namaPengaju,
       namaPenyetuju: namaPenyetuju ?? this.namaPenyetuju,
       namaKelas: namaKelas ?? this.namaKelas,
+      isHidden: isHidden ?? this.isHidden,
+      statusData: statusData ?? this.statusData,
     );
   }
 
@@ -82,24 +95,28 @@ class LaporanModel {
 
     StatusLaporan parsedStatus;
     switch (json['status']) {
-      case 'diajukan': parsedStatus = StatusLaporan.diajukan; break;
-      case 'disetujui': parsedStatus = StatusLaporan.disetujui; break;
-      case 'revisi': parsedStatus = StatusLaporan.revisi; break;
+      case 'diajukan':
+        parsedStatus = StatusLaporan.diajukan;
+        break;
+      case 'disetujui':
+        parsedStatus = StatusLaporan.disetujui;
+        break;
+      case 'revisi':
+        parsedStatus = StatusLaporan.revisi;
+        break;
       case 'draft':
       default:
         parsedStatus = StatusLaporan.draft;
         break;
     }
 
-    // Null-safety: parsing tanggalAksi dengan try-catch
-    // agar data lama yang belum ada field ini tidak crash
     DateTime? parsedTanggalAksi;
     try {
       if (json['tanggal_aksi'] != null) {
         parsedTanggalAksi = DateTime.parse(json['tanggal_aksi'].toString());
       }
     } catch (_) {
-      parsedTanggalAksi = null; // gracefully fallback ke null jika format salah
+      parsedTanggalAksi = null;
     }
 
     DateTime? parsedTanggalAcc;
@@ -121,29 +138,43 @@ class LaporanModel {
           ? DateTime.tryParse(json['tanggal_pengajuan'].toString()) ?? DateTime.now()
           : DateTime.now(),
       tanggalAcc: parsedTanggalAcc,
-      tanggalAksi: parsedTanggalAksi, // null jika data lama belum ada field ini
+      tanggalAksi: parsedTanggalAksi,
       filePdfUrl: json['file_pdf_url'],
       catatanRevisi: json['catatan_revisi'],
       kelasId: json['kelas_id'],
       namaPengaju: json['nama_pengaju'],
       namaPenyetuju: json['nama_penyetuju'],
       namaKelas: json['nama_kelas'],
+      isHidden: json['is_hidden'] ?? false,
+      statusData: json['status_data'] ?? 'seen',
     );
   }
 
   Map<String, dynamic> toJson() {
     String jenisStr;
     switch (jenis) {
-      case JenisLaporan.gabunganSekolah: jenisStr = 'gabungan_sekolah'; break;
-      case JenisLaporan.perKelas: jenisStr = 'per_kelas'; break;
+      case JenisLaporan.gabunganSekolah:
+        jenisStr = 'gabungan_sekolah';
+        break;
+      case JenisLaporan.perKelas:
+        jenisStr = 'per_kelas';
+        break;
     }
 
     String statusStr;
     switch (status) {
-      case StatusLaporan.draft: statusStr = 'draft'; break;
-      case StatusLaporan.diajukan: statusStr = 'diajukan'; break;
-      case StatusLaporan.disetujui: statusStr = 'disetujui'; break;
-      case StatusLaporan.revisi: statusStr = 'revisi'; break;
+      case StatusLaporan.draft:
+        statusStr = 'draft';
+        break;
+      case StatusLaporan.diajukan:
+        statusStr = 'diajukan';
+        break;
+      case StatusLaporan.disetujui:
+        statusStr = 'disetujui';
+        break;
+      case StatusLaporan.revisi:
+        statusStr = 'revisi';
+        break;
     }
 
     return {
@@ -158,6 +189,11 @@ class LaporanModel {
       'file_pdf_url': filePdfUrl,
       'catatan_revisi': catatanRevisi,
       'kelas_id': kelasId,
+      'nama_pengaju': namaPengaju,
+      'nama_penyetuju': namaPenyetuju,
+      'nama_kelas': namaKelas,
+      'is_hidden': isHidden,
+      'status_data': statusData,
     };
   }
 }
